@@ -9,7 +9,8 @@
     "express": "^4.17.1",
     "helmet": "^3.21.3",
     "knex": "^0.20.11",
-    "pg": "^7.18.2"
+    "pg": "^7.18.2",
+    "sqlite3": "^4.1.1"
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
