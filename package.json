@@ -22,7 +22,9 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --watch",
+    "server": "nodemon -r dotenv/config index.js"
   },
   "repository": {
     "type": "git",
@@ -42,5 +44,8 @@
   },
   "lint-staged": {
     "*.{js,css,md}": "prettier --write"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
