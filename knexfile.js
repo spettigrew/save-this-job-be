@@ -2,9 +2,9 @@
 
 module.exports = {
   development: {
-    client: "pg",
+    client: "sqlite3",
     connection: {
-      filename: "postgres://localhost/8080"
+      filename: "./database/jobbook.db3"
     },
     migrations: {
       directory: "./database/migrations"
@@ -12,17 +12,18 @@ module.exports = {
     seeds: {
       directory: "./database/seeds"
     },
+    useNullAsDefault: true,
     pool: {
-      min: 2,
-      max: 10
-    },
-    useNullAsDefault: true
+      afterCreate: (conn, done) => {
+        conn.run("PRAGMA foreign_keys = ON", done);
+      }
+    }
   },
 
   test: {
-    client: "pg",
+    client: "sqlite3",
     connection: {
-      filename: "postgres://localhost/8080"
+      filename: "./database/test.db3"
     },
     migrations: {
       directory: "./database/migrations"
@@ -31,8 +32,10 @@ module.exports = {
       directory: "./database/seeds"
     },
     pool: {
-      min: 2,
-      max: 10
+      afterCreate: (conn, done) => {
+        conn.run("PRAGMA foreign_keys = ON", done);
+      },
+      useNullAsDefault: true
     }
   },
 
