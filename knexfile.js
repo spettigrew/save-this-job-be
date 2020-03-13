@@ -1,41 +1,34 @@
 // Update with your config settings.
+const pg = require("pg");
+
+const sqlite3 = {
+  client: "sqlite3",
+  useNullAsDefault: true,
+  migrations: {
+    directory: "./database/migrations"
+  },
+  seeds: {
+    directory: "./database/seeds"
+  },
+  pool: {
+    afterCreate: (conn, done) => {
+      conn.run("PRAGMA foreign_keys = ON", done);
+    }
+  }
+};
 
 module.exports = {
   development: {
-    client: "sqlite3",
+    ...sqlite3,
     connection: {
       filename: "./database/jobbook.db3"
-    },
-    migrations: {
-      directory: "./database/migrations"
-    },
-    seeds: {
-      directory: "./database/seeds"
-    },
-    useNullAsDefault: true,
-    pool: {
-      afterCreate: (conn, done) => {
-        conn.run("PRAGMA foreign_keys = ON", done);
-      }
     }
   },
 
   test: {
-    client: "sqlite3",
+    ...sqlite3,
     connection: {
       filename: "./database/test.db3"
-    },
-    migrations: {
-      directory: "./database/migrations"
-    },
-    seeds: {
-      directory: "./database/seeds"
-    },
-    pool: {
-      afterCreate: (conn, done) => {
-        conn.run("PRAGMA foreign_keys = ON", done);
-      },
-      useNullAsDefault: true
     }
   },
 
@@ -56,7 +49,7 @@ module.exports = {
   },
 
   production: {
-    client: "postgresql",
+    client: "pg",
     connection: {
       database: "my_db",
       user: "username",
