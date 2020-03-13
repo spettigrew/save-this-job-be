@@ -1,10 +1,13 @@
 const express = require("express");
+const usersRouter = require("./users/users_router");
 
 const server = express();
 
 const PORT = process.env.PORT || 8080;
 
 server.use(express.json());
+
+server.use("/", usersRouter);
 
 server.use((err, req, res, next) => {
   console.log(`Err:`, err);

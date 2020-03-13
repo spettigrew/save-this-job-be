@@ -9,6 +9,10 @@ beforeAll(async () => {
 });
 
 describe("users router", () => {
-  describe("register", () => {});
+  describe("register", () => {
+    it("should register new user, return 201", async () => {});
+    it("should NOT register duplicate user, return 400", async () => {});
+    it("should NOT register duplicate email, return 400", async () => {});
+  });
   describe("log in", () => {});
 });
