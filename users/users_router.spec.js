@@ -4,8 +4,8 @@ const db = require("../database/db-config");
 
 beforeAll(async () => {
   console.log(`Tests called...`);
-  // truncate seeds
-  // run all seeds
+  //   await db.truncate('users')
+  //   await db.seed.run()
 });
 
 describe("users router", () => {
