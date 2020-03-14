@@ -1,4 +1,3 @@
-// Update with your config settings.
 const pg = require("pg");
 
 const sqlite3 = {
