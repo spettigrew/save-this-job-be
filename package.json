@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose --watch",
+    "test": "cross-env NODE_ENV=test jest --verbose --watchAll --coverage",
     "server": "nodemon -r dotenv/config index.js"
   },
   "repository": {
