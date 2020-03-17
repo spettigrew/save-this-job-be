@@ -1,29 +1,62 @@
+const express = require("express");
+const router = express.Router();
+const oktaClient = require("../lib/oktaClient");
+const Users = require("./users-model");
 const db = require("../database/dbConfig");
 
-module.exports = {
-  add,
-  find,
-  findBy,
-  findById
-};
+router.post("/register", async (req, res, next) => {
+  if (!req.body) return res.sendStatus(400);
+  const newUser = {
+    profile: {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      login: req.body.email
+    },
+    credentials: {
+      password: {
+        value: req.body.password
+      }
+    }
+  };
 
-function find() {
-  return db("users").select("id", "email");
-}
+  // Add a user to our OKTA application
+  oktaClient
+    .createUser(newUser)
+    .then(user => {
+      res.status(201);
+      res.send(user);
+    })
+    .catch(err => {
+      res.status(400);
+      res.send(err);
+    });
 
-function findBy(filter) {
-  return db("users").where(filter);
-}
+  // Add that user to the applications database
+  try {
+    const appUser = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email
+    };
+    const saved = await Users.add(appUser, "id");
 
-async function add(user) {
-  return db("users")
-    .insert(user, "id")
-    .returning("*");
-}
+    res.status(201).json(saved);
+  } catch (err) {
+    next(err);
+  }
+});
 
-function findById(email) {
-  return db("users")
-    .select("email", "email")
-    .where({ email })
-    .first();
-}
+router.get("/:email", async (req, res) => {
+  try {
+    const user = await db("users")
+      .where({ email: req.params.email })
+      .first();
+
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
+module.exports = router;
