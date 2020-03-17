@@ -14,10 +14,7 @@ exports.up = async function(knex) {
 
   await knex.schema.createTable("jobPosts", table => {
     table.increments("id");
-    table
-      .string("jobTitle")
-      .notNull()
-      .unique();
+    table.string("jobTitle").notNull();
     table.string("url").notNull();
     table
       .integer("users_id")
