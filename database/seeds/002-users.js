@@ -1,7 +1,7 @@
 exports.seed = async knex => {
   await knex("users").insert([
-    { username: "", password: "", email: "" },
-    { username: "", password: "", email: "" },
-    { username: "", password: "", email: "" }
+    { name: "Rose", email: "rose@gmail.com" },
+    { name: "Don", email: "don@email.com" },
+    { name: "Kevin", email: "kevin@gmail.com" }
   ]);
 };
