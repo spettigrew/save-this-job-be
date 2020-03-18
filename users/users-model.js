@@ -1,11 +1,4 @@
-const db = require("../database/dbConfig");
-
-module.exports = {
-  add,
-  find,
-  findBy,
-  findById
-};
+const db = require("../database/db-config");
 
 function find() {
   return db("users").select("id", "email");
@@ -27,3 +20,10 @@ function findById(email) {
     .where({ email })
     .first();
 }
+
+module.exports = {
+  add,
+  find,
+  findBy,
+  findById
+};

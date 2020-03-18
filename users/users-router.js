@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const oktaClient = require("../lib/oktaClient");
 const Users = require("./users-model");
-const db = require("../database/dbConfig");
+const db = require("../database/db-config");
 
 router.post("/register", async (req, res, next) => {
   if (!req.body) return res.sendStatus(400);
