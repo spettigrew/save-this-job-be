@@ -1,11 +1,14 @@
 const express = require("express");
-const usersRouter = require("./users/users_router");
+const usersRouter = require("./users/users-router");
+const cors = require("cors");
 
 const server = express();
 
 const PORT = process.env.PORT || 8080;
 
 server.use(express.json());
+server.use(cors());
+// server.use(jwtMiddleWare());
 
 server.use("/", usersRouter);
 

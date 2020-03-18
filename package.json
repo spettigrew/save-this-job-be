@@ -4,6 +4,7 @@
   "description": "🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.",
   "main": "index.js",
   "dependencies": {
+    "@okta/jwt-verifier": "^1.0.0",
     "@okta/okta-sdk-nodejs": "^3.2.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
