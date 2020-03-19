@@ -9,6 +9,7 @@ router.post("/register", async (req, res, next) => {
     return res
       .status(400)
       .json({ message: "Please enter all required felids" });
+
   try {
     const newUser = {
       profile: {
@@ -25,6 +26,7 @@ router.post("/register", async (req, res, next) => {
     };
     const response = await OktaClient.createUser(newUser);
     console.log(response);
+    res.json(response);
 
     // Only Add that user to the applications database if the user was successfully added to okta's database
     if (response.status === "ACTIVE") {
@@ -33,10 +35,7 @@ router.post("/register", async (req, res, next) => {
         lastName: req.body.lastName,
         email: req.body.email
       };
-      const saved = await Users.add(appUser, "id");
-      res.status(201).json(saved);
-    } else {
-      return res.json(response);
+      await Users.add(appUser, "id");
     }
   } catch (err) {
     console.log(err);
