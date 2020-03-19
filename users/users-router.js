@@ -1,49 +1,45 @@
 const express = require("express");
 const router = express.Router();
-const oktaClient = require("../lib/oktaClient");
+const OktaClient = require("../lib/oktaClient");
 const Users = require("./users-model");
 const db = require("../database/db-config");
 
 router.post("/register", async (req, res, next) => {
-  if (!req.body) return res.sendStatus(400);
-  const newUser = {
-    profile: {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      login: req.body.email
-    },
-    credentials: {
-      password: {
-        value: req.body.password
-      }
-    }
-  };
+  if (!req.body)
+    return res
+      .status(400)
+      .json({ message: "Please enter all required felids" });
 
-  // Add a user to our OKTA application
-  oktaClient
-    .createUser(newUser)
-    .then(user => {
-      res.status(201);
-      res.send(user);
-    })
-    .catch(err => {
-      res.status(400);
-      res.send(err);
-    });
-
-  // Add that user to the applications database
   try {
-    const appUser = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email
+    const newUser = {
+      profile: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        login: req.body.email
+      },
+      credentials: {
+        password: {
+          value: req.body.password
+        }
+      }
     };
-    const saved = await Users.add(appUser, "id");
+    const response = await OktaClient.createUser(newUser);
+    console.log(response);
+    res.json(response);
 
-    res.status(201).json(saved);
+    // Only Add that user to the applications database if the user was successfully added to okta's database
+    if (response.status === "ACTIVE") {
+      const appUser = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email
+      };
+      await Users.add(appUser, "id");
+    }
   } catch (err) {
-    next(err);
+    console.log(err);
+    res.json(err);
   }
 });
 
