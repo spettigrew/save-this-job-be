@@ -6,7 +6,7 @@
 
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [Heroku](🚫add URL here) <br>
+#### 1️⃣ Backend delpoyed at [Heroku](https://dashboard.heroku.com/apps) <br>
 
 ## 1️⃣ Getting started
 
@@ -30,26 +30,21 @@ To get the server running locally:
 
 ## 2️⃣ Endpoints
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
+#### Base URL https://staging-save-this-job.herokuapp.com/
 
-#### User Routes (🚫All needs updating)
+#### User Routes
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+| Method | Endpoint     | Access Control | Description                          |
+| ------ | ------------ | -------------- | ------------------------------------ |
+| GET    | `/users/:id` | Specific User  | Returns info for the logged in user. |
 
-#### Job posts Routes (🚫All needs updating)
+#### Job posts Routes
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+| Method | Endpoint            | Access Control | Description                          |
+| ------ | ------------------- | -------------- | ------------------------------------ |
+| GET    | `/users/:id/jobs`   | User logged in | Returns All job posts for that user. |
+| POST   | `/users/:id/addJob` | User Logged in | Adds job to User profile             |
+| DELETE | `/jobPosts/:id`     | User Logged in | Delete a Job Post                    |
 
 # Data Model
 

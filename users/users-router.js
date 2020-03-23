@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const OktaClient = require("../lib/oktaClient");
-const Users = require("./users-model");
+const userMod = require("./users-model");
+const jobMod = require("../jobPosts/job_posts_model.js");
 const db = require("../database/db-config");
 
 router.post("/register", async (req, res, next) => {
@@ -11,22 +12,22 @@ router.post("/register", async (req, res, next) => {
       .json({ message: "Please enter all required felids" });
 
   try {
-    const newUser = {
-      profile: {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        login: req.body.email
-      },
-      credentials: {
-        password: {
-          value: req.body.password
-        }
-      }
-    };
-    const response = await OktaClient.createUser(newUser);
-    console.log(response);
-    res.json(response);
+    // const newUser = {
+    //   profile: {
+    //     firstName: req.body.firstName,
+    //     lastName: req.body.lastName,
+    //     email: req.body.email,
+    //     login: req.body.email
+    //   },
+    //   credentials: {
+    //     password: {
+    //       value: req.body.password
+    //     }
+    //   }
+    // };
+    // const response = await OktaClient.createUser(newUser);
+    // console.log(response);
+    // res.json(response);
 
     // Only Add that user to the applications database if the user was successfully added to okta's database
     if (response.status === "ACTIVE") {
@@ -35,7 +36,7 @@ router.post("/register", async (req, res, next) => {
         lastName: req.body.lastName,
         email: req.body.email
       };
-      await Users.add(appUser, "id");
+      await userMod.add(appUser, "id");
     }
   } catch (err) {
     console.log(err);
@@ -43,6 +44,7 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
+// Not sure, for Okta?
 router.get("/:email", async (req, res) => {
   try {
     const user = await db("users")
@@ -50,6 +52,40 @@ router.get("/:email", async (req, res) => {
       .first();
 
     res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Get user by Id
+router.get("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await userMod.findBy(id);
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Grab user jobs
+router.get("/:id/jobs", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const jobPosts = await jobMod.findJobByUser(id);
+    res.status(200).json(jobPosts);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/:id/addJob", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const newJob = await jobMod.addJob(req.body, id);
+    res.status(201).json({
+      message: "Job Post created"
+    });
   } catch (err) {
     next(err);
   }
