@@ -4,8 +4,10 @@ function findJob() {
   return db("jobPosts").select();
 }
 
-async function addJob(user) {
-  return db("jobPosts").insert(user, "id");
+async function addJob(job, id) {
+  return db("jobPosts")
+    .where({ id })
+    .insert(job);
 }
 
 // find specific job post

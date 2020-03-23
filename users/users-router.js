@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const OktaClient = require("../lib/oktaClient");
 const userMod = require("./users-model");
+const jobMod = require("../jobPosts/job_posts_model.js");
 const db = require("../database/db-config");
 
 router.post("/register", async (req, res, next) => {
@@ -73,6 +74,18 @@ router.get("/:id/jobs", async (req, res, next) => {
     const { id } = req.params;
     const jobPosts = await jobMod.findJobByUser(id);
     res.status(200).json(jobPosts);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/:id/addJob", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const newJob = await jobMod.addJob(req.body, id);
+    res.status(201).json({
+      message: "Job Post created"
+    });
   } catch (err) {
     next(err);
   }
