@@ -16,7 +16,7 @@ router.post("/addJob", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const removeJob = await jobMod.removeJobPost(id);
+    const removeJob = await jobMod.removeJob(id);
     res.status(200).json({ message: "Job deleted" });
   } catch (err) {
     next(err);

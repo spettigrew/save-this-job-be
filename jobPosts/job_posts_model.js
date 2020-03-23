@@ -1,27 +1,31 @@
 const db = require("../database/db-config");
 
-function findJobPost() {
+function findJob() {
   return db("jobPosts").select();
-}
-
-function findJobPostBy(filter) {
-  return db("jobPosts").where(filter);
 }
 
 async function addJob(user) {
   return db("jobPosts").insert(user, "id");
 }
 
-function findJobPostById(id) {
+// find specific job post
+
+function findJobById(id) {
   return db("jobPosts")
     .select()
     .where({ id })
     .first();
 }
 
+function findJobByUser(users_id) {
+  return db("jobPosts")
+    .select()
+    .where({ users_id });
+}
+
 // need to find all job posts under user id
 
-function removeJobPost(id) {
+function removeJob(id) {
   return db("jobPosts")
     .where({ id })
     .del();
@@ -29,8 +33,9 @@ function removeJobPost(id) {
 
 module.exports = {
   addJob,
-  findJobPost,
-  findJobPostBy,
-  findJobPostById,
-  removeJobPost
+  findJob,
+  findJobBy,
+  findJobById,
+  removeJob,
+  findJobByUser
 };
