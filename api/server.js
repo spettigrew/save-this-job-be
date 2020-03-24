@@ -1,16 +1,20 @@
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
 const usersRouter = require("../users/users-router");
 const jobPostsRouter = require("../jobPosts/job_posts_router");
 const server = express();
 
-server.use(express.json());
-server.use(helmet());
 server.use(cors());
-// server.use(jwtMiddleWare());
+server.use(helmet());
+server.use(express.json());
 
 server.use("/users", usersRouter);
 server.use("/jobPosts", jobPostsRouter);
+
+server.get("/", (req, res, next) => {
+  res.json({ message: "sanity check" });
+});
 
 server.use((err, req, res, next) => {
   console.log(`Err:`, err);
@@ -18,3 +22,5 @@ server.use((err, req, res, next) => {
     message: `Something went wrong`
   });
 });
+
+module.exports = server;

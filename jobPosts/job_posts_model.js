@@ -36,7 +36,6 @@ function removeJob(id) {
 module.exports = {
   addJob,
   findJob,
-  findJobBy,
   findJobById,
   removeJob,
   findJobByUser
