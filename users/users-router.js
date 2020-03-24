@@ -1,48 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const OktaClient = require("../lib/oktaClient");
 const userMod = require("./users-model");
 const jobMod = require("../jobPosts/job_posts_model.js");
 const db = require("../database/db-config");
-
-router.post("/register", async (req, res, next) => {
-  if (!req.body)
-    return res
-      .status(400)
-      .json({ message: "Please enter all required felids" });
-
-  try {
-    // const newUser = {
-    //   profile: {
-    //     firstName: req.body.firstName,
-    //     lastName: req.body.lastName,
-    //     email: req.body.email,
-    //     login: req.body.email
-    //   },
-    //   credentials: {
-    //     password: {
-    //       value: req.body.password
-    //     }
-    //   }
-    // };
-    // const response = await OktaClient.createUser(newUser);
-    // console.log(response);
-    // res.json(response);
-
-    // Only Add that user to the applications database if the user was successfully added to okta's database
-    if (response.status === "ACTIVE") {
-      const appUser = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email
-      };
-      await userMod.add(appUser, "id");
-    }
-  } catch (err) {
-    console.log(err);
-    res.json(err);
-  }
-});
+const authenticationRequired = require("../middleware/oktaJwtVerifier");
 
 // Not sure, for Okta?
 router.get("/:email", async (req, res) => {
@@ -78,17 +39,41 @@ router.get("/:id/jobs", async (req, res, next) => {
     next(err);
   }
 });
-
-router.post("/:id/addJob", async (req, res, next) => {
+//  add job to user
+router.post("/addJob", authenticationRequired, async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const newJob = await jobMod.addJob(req.body, id);
-    res.status(201).json({
-      message: "Job Post created"
-    });
+    const firstName = req.jwt.claims.firstName;
+    const lastName = req.jwt.claims.lastName;
+    const email = req.jwt.claims.email;
+    const user = await userMod.findByEmail(email);
+
+    if (user) {
+      saveJob(req.body, user.id, res);
+    } else {
+      const appUser = {
+        firstName,
+        lastName,
+        email
+      };
+      const [id] = await userMod.add(appUser);
+      saveJob(req.body, id, res);
+    }
   } catch (err) {
     next(err);
   }
 });
+
+async function saveJob(info, id, res) {
+  const job = await jobMod.addJob({ ...info, users_id: id }, id);
+  if (job) {
+    res.status(201).json({
+      message: "Job Post Created"
+    });
+  } else {
+    send.status(500).json({
+      message: "Error Saving Job Post, please try again later"
+    });
+  }
+}
 
 module.exports = router;
