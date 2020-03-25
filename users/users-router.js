@@ -4,64 +4,59 @@ const userMod = require("./users-model");
 const jobMod = require("../jobPosts/job_posts_model.js");
 const db = require("../database/db-config");
 const authenticationRequired = require("../middleware/oktaJwtVerifier");
+const checkUser = require("../middleware/checkUser");
 
 // Not sure, for Okta?
-router.get("/:email", async (req, res) => {
-  try {
-    const user = await db("users")
-      .where({ email: req.params.email })
-      .first();
+// router.get("/", async (req, res) => {
+//   try {
+//     const user = await db("users")
+//       .where({ email: req.params.email })
+//       .first();
 
-    res.status(200).json(user);
-  } catch (err) {
-    next(err);
-  }
-});
+//     res.status(200).json(user);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 // Get user by Id
-router.get("/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const user = await userMod.findBy(id);
-    res.status(200).json(user);
-  } catch (err) {
-    next(err);
-  }
-});
+// router.get("/", async (req, res, next) => {
+//   try {
+//     const { id } = req.params;
+//     const user = await userMod.findBy(id);
+//     res.status(200).json(user);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 // Grab user jobs
-router.get("/:id/jobs", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const jobPosts = await jobMod.findJobByUser(id);
-    res.status(200).json(jobPosts);
-  } catch (err) {
-    next(err);
-  }
-});
-//  add job to user
-router.post("/addJob", authenticationRequired, async (req, res, next) => {
-  try {
-    const firstName = req.jwt.claims.firstName;
-    const lastName = req.jwt.claims.lastName;
-    const email = req.jwt.claims.email;
-    const user = await userMod.findByEmail(email);
-
-    if (user) {
-      saveJob(req.body, user.id, res);
-    } else {
-      const appUser = {
-        firstName,
-        lastName,
-        email
-      };
-      const [id] = await userMod.add(appUser);
-      saveJob(req.body, id, res);
+router.get(
+  "/jobs",
+  authenticationRequired,
+  checkUser,
+  async (req, res, next) => {
+    try {
+      const jobPosts = await jobMod.findJobByUser(req.userId);
+      res.status(200).json(jobPosts);
+    } catch (err) {
+      next(err);
     }
-  } catch (err) {
-    next(err);
   }
-});
+);
+//  add job to user
+router.post(
+  "/addJob",
+  authenticationRequired,
+  checkUser,
+  async (req, res, next) => {
+    try {
+      saveJob(req.body, req.userId, res);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 async function saveJob(info, id, res) {
   const job = await jobMod.addJob({ ...info, users_id: id }, id);
