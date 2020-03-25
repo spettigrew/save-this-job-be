@@ -8,7 +8,6 @@ async function checkUser(req, res, next) {
 
   if (user) {
     req.userId = user.id;
-    console.log("Working from checkUser");
     next();
   } else {
     const appUser = {
