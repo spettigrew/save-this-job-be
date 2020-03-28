@@ -12,11 +12,13 @@ async function addJob(job, id) {
 
 // find specific job post
 
-function findJobById(id) {
-  return db("jobPosts")
+async function findJobById(id) {
+  const job = await db("jobPosts")
     .select()
     .where({ id })
     .first();
+
+  return job ? job : null;
 }
 
 function findJobByUser(users_id) {
