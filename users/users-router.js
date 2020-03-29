@@ -1,34 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const userMod = require("./users-model");
 const jobMod = require("../jobPosts/job_posts_model.js");
-const db = require("../database/db-config");
 const authenticationRequired = require("../middleware/oktaJwtVerifier");
 const checkUser = require("../middleware/checkUser");
-
-// Not sure, for Okta?
-// router.get("/", async (req, res) => {
-//   try {
-//     const user = await db("users")
-//       .where({ email: req.params.email })
-//       .first();
-
-//     res.status(200).json(user);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-// Get user by Id
-// router.get("/", async (req, res, next) => {
-//   try {
-//     const { id } = req.params;
-//     const user = await userMod.findBy(id);
-//     res.status(200).json(user);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
 
 // Grab user jobs
 router.get(
@@ -51,24 +25,51 @@ router.post(
   checkUser,
   async (req, res, next) => {
     try {
-      saveJob(req.body, req.userId, res);
+      const job = await jobMod.addJob(
+        { ...req.body, users_id: req.userId },
+        req.userId
+      );
+      if (job) {
+        res.status(201).json({
+          message: "Job Post Created"
+        });
+      } else {
+        send.status(500).json({
+          message: "Error Saving Job Post, please try again later"
+        });
+      }
     } catch (err) {
       next(err);
     }
   }
 );
+// remove job from user
+router.delete(
+  "/removeJob/:id",
+  authenticationRequired,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const job = await jobMod.findJobById(id);
+      const count = await jobMod.removeJob(id);
 
-async function saveJob(info, id, res) {
-  const job = await jobMod.addJob({ ...info, users_id: id }, id);
-  if (job) {
-    res.status(201).json({
-      message: "Job Post Created"
-    });
-  } else {
-    send.status(500).json({
-      message: "Error Saving Job Post, please try again later"
-    });
+      if (!job) {
+        return res
+          .status(400)
+          .json({ message: "The job you are trying to delete does not exist" });
+      }
+
+      if (count > 0) {
+        res.json({ message: "Job successfully deleted" });
+      } else {
+        res
+          .status(500)
+          .json({ message: "There was an error deleting you job post" });
+      }
+    } catch (err) {
+      next(err);
+    }
   }
-}
+);
 
 module.exports = router;
