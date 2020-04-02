@@ -13,6 +13,7 @@ exports.up = async function(knex) {
     table.increments("id");
     table.string("jobTitle").notNull();
     table.string("url").notNull();
+    table.string("logo");
     table
       .integer("users_id")
       .references("id")
