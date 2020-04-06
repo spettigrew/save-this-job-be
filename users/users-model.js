@@ -9,19 +9,20 @@ function findBy(filter) {
 }
 
 async function add(user) {
-  return db("users").insert(user, "id");
+  return db("users").insert(user);
 }
 
-function findById(email) {
-  return db("users")
-    .select("email", "email")
+async function findByEmail(email) {
+  const user = await db("users")
     .where({ email })
     .first();
+
+  return user ? user : null;
 }
 
 module.exports = {
   add,
   find,
   findBy,
-  findById
+  findByEmail
 };

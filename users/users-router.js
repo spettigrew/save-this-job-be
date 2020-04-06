@@ -1,94 +1,75 @@
 const express = require("express");
 const router = express.Router();
-const OktaClient = require("../lib/oktaClient");
-const userMod = require("./users-model");
 const jobMod = require("../jobPosts/job_posts_model.js");
-const db = require("../database/db-config");
-
-router.post("/register", async (req, res, next) => {
-  if (!req.body)
-    return res
-      .status(400)
-      .json({ message: "Please enter all required felids" });
-
-  try {
-    // const newUser = {
-    //   profile: {
-    //     firstName: req.body.firstName,
-    //     lastName: req.body.lastName,
-    //     email: req.body.email,
-    //     login: req.body.email
-    //   },
-    //   credentials: {
-    //     password: {
-    //       value: req.body.password
-    //     }
-    //   }
-    // };
-    // const response = await OktaClient.createUser(newUser);
-    // console.log(response);
-    // res.json(response);
-
-    // Only Add that user to the applications database if the user was successfully added to okta's database
-    if (response.status === "ACTIVE") {
-      const appUser = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email
-      };
-      await userMod.add(appUser, "id");
-    }
-  } catch (err) {
-    console.log(err);
-    res.json(err);
-  }
-});
-
-// Not sure, for Okta?
-router.get("/:email", async (req, res) => {
-  try {
-    const user = await db("users")
-      .where({ email: req.params.email })
-      .first();
-
-    res.status(200).json(user);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// Get user by Id
-router.get("/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const user = await userMod.findBy(id);
-    res.status(200).json(user);
-  } catch (err) {
-    next(err);
-  }
-});
+const authenticationRequired = require("../middleware/oktaJwtVerifier");
+const checkUser = require("../middleware/checkUser");
 
 // Grab user jobs
-router.get("/:id/jobs", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const jobPosts = await jobMod.findJobByUser(id);
-    res.status(200).json(jobPosts);
-  } catch (err) {
-    next(err);
+router.get(
+  "/jobs",
+  authenticationRequired,
+  checkUser,
+  async (req, res, next) => {
+    try {
+      const jobPosts = await jobMod.findJobByUser(req.userId);
+      res.status(200).json(jobPosts);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
+//  add job to user
+router.post(
+  "/addJob",
+  authenticationRequired,
+  checkUser,
+  async (req, res, next) => {
+    try {
+      const job = await jobMod.addJob(
+        { ...req.body, users_id: req.userId },
+        req.userId
+      );
+      if (job) {
+        res.status(201).json({
+          message: "Job Post Created"
+        });
+      } else {
+        send.status(500).json({
+          message: "Error Saving Job Post, please try again later"
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+// remove job from user
+router.delete(
+  "/removeJob/:id",
+  authenticationRequired,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const job = await jobMod.findJobById(id);
+      const count = await jobMod.removeJob(id);
 
-router.post("/:id/addJob", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const newJob = await jobMod.addJob(req.body, id);
-    res.status(201).json({
-      message: "Job Post created"
-    });
-  } catch (err) {
-    next(err);
+      if (!job) {
+        return res
+          .status(400)
+          .json({ message: "The job you are trying to delete does not exist" });
+      }
+
+      if (count > 0) {
+        res.json({ message: "Job successfully deleted" });
+      } else {
+        res
+          .status(500)
+          .json({ message: "There was an error deleting you job post" });
+      }
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 module.exports = router;
