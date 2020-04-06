@@ -32,18 +32,19 @@ module.exports = {
   },
 
   staging: {
-    client: "postgresql",
+    client: "pg",
     connection: {
-      database: "my_db",
-      user: "username",
-      password: "password"
+      database: process.env.DATABASE_URL,
+      user: process.env.USER,
+      password: process.env.PASSWORD
     },
     pool: {
       min: 2,
       max: 10
     },
     migrations: {
-      tableName: "knex_migrations"
+      tableName: "knex_migrations",
+      directory: __dirname + "/database/migrations"
     }
   },
 
@@ -59,7 +60,8 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: "knex_migrations"
+      tableName: "knex_migrations",
+      directory: __dirname + "/database/migrations"
     }
   }
 };
