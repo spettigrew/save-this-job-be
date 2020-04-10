@@ -46,7 +46,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,css,md}": "prettier --write"
+    "*.{js,css}": "prettier --write"
   },
   "jest": {
     "testEnvironment": "node"
