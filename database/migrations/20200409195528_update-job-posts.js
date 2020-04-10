@@ -6,14 +6,17 @@ exports.up = async function(knex) {
       .notNull()
       .defaultTo("default");
     table.date("applicationDeadline");
-    table.decimal("rating");
+    table.integer("rating");
   });
 };
 
 exports.down = async function(knex) {
   await knex.schema.table("jobPosts", table => {
     table.dropColumn("urlText");
-    table.string("url").notNull();
+    table
+      .string("url")
+      .notNull()
+      .defaultTo("default");
     table.dropColumn("applicationDeadline");
     table.dropColumn("rating");
   });
