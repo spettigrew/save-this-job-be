@@ -6,6 +6,12 @@
 
 # API Documentation
 
+#### Code Climate
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/fb3f5b13a4e14009a587/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/job-book-be/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/fb3f5b13a4e14009a587/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/job-book-be/test_coverage)
+
 #### 1️⃣ Backend delpoyed at [Heroku](https://dashboard.heroku.com/apps) <br>
 
 ## 1️⃣ Getting started
@@ -40,11 +46,11 @@ To get the server running locally:
 
 #### Job posts Routes
 
-| Method | Endpoint            | Access Control | Description                          |
-| ------ | ------------------- | -------------- | ------------------------------------ |
-| GET    | `/users/:id/jobs`   | User logged in | Returns All job posts for that user. |
-| POST   | `/users/:id/addJob` | User Logged in | Adds job to User profile             |
-| DELETE | `/jobPosts/:id`     | User Logged in | Delete a Job Post                    |
+| Method | Endpoint              | Access Control | Description                          |
+| ------ | --------------------- | -------------- | ------------------------------------ |
+| GET    | `/users/jobs`         | User logged in | Returns All job posts for that user. |
+| POST   | `/users/addJob`       | User Logged in | Adds job to User profile             |
+| DELETE | `/users/removeJob:id` | User Logged in | Delete a Job Post                    |
 
 # Data Model
 
@@ -86,21 +92,17 @@ To get the server running locally:
 
 `findById(email)` -> Finds a user by email.
 
-🚫 Need the following actions still.
-
-- delete user
-- update user
-
 #### Job posts
 
-🚫 Need the following actions still.
+`findJob()` -> Retuns all Jobs
 
-- findPost
-- findPostById
-- findBy(filter)
-- addPost
-- updatePost
-- deletePost
+`findJobById(id)` -> Returns a Job post by Job id
+
+`addJob(job, id)` -> Add a Job
+
+`findJobByUser(users_id)` -> Finds all users Jobs.
+
+`removeJob(id)` -> Deletes a Job
 
 ## 3️⃣ Environment Variables
 
