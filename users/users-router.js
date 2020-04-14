@@ -64,7 +64,30 @@ router.delete(
       } else {
         res
           .status(500)
-          .json({ message: "There was an error deleting you job post" });
+          .json({ message: "There was an error deleting your job post" });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.put(
+  "/updateJob/:id",
+  authenticationRequired,
+  checkUser,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const updatedJob = await jobMod.updateJob(id, req.body);
+      if (updatedJob) {
+        res.status(200).json({
+          message: "Job Post Updated"
+        });
+      } else {
+        send.status(500).json({
+          message: "Error Updating Job Post, please try again later"
+        });
       }
     } catch (err) {
       next(err);
