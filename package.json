@@ -40,14 +40,6 @@
     "url": "https://github.com/Lambda-School-Labs/job-book-be/issues"
   },
   "homepage": "https://github.com/Lambda-School-Labs/job-book-be#readme",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,css}": "prettier --write"
-  },
   "jest": {
     "testEnvironment": "node"
   }
