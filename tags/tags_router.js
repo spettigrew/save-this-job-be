@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const authenticationRequired = require("../middleware/oktaJwtVerifier");
-// const checkUser = require("../middleware/checkUser");
 const tagMod = require("./tags_model");
 
 router.get("/", async (req, res, next) => {
@@ -31,7 +29,6 @@ router.post("/addTag", async (req, res, next) => {
   }
 });
 
-// remove tag from user
 router.delete("/tags/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
