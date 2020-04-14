@@ -27,7 +27,8 @@
   "scripts": {
     "start": "node index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --watchAll --coverage",
-    "server": "nodemon -r dotenv/config index.js"
+    "server": "nodemon -r dotenv/config index.js",
+    "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,12 @@
   },
   "homepage": "https://github.com/Lambda-School-Labs/job-book-be#readme",
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!**/__tests__/**"
+    ]
   }
 }

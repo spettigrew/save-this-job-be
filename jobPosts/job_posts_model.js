@@ -4,10 +4,10 @@ function findJob() {
   return db("jobPosts").select();
 }
 
-async function addJob(job, id) {
+async function addJob(newJob, id) {
   return db("jobPosts")
     .where({ id })
-    .insert(job);
+    .insert(newJob);
 }
 
 // find specific job post
@@ -35,10 +35,18 @@ function removeJob(id) {
     .del();
 }
 
+async function updateJob(id, job_update) {
+  await db("jobPosts")
+    .where({ id })
+    .update(job_update)
+    .returning("*");
+}
+
 module.exports = {
   addJob,
   findJob,
   findJobById,
   removeJob,
-  findJobByUser
+  findJobByUser,
+  updateJob
 };
