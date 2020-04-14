@@ -1,6 +1,6 @@
 const db = require("../database/db-config");
 
-function findTag() {
+function findTags() {
   return db("jobTags").select();
 }
 
@@ -24,7 +24,7 @@ async function updateTag(id, tag_update) {
 }
 
 module.exports = {
-  findTag,
+  findTags,
   addTag,
   removeTag,
   updateTag
