@@ -4,9 +4,12 @@ exports.up = async function(knex) {
     table
       .text("urlText")
       .notNull()
-      .defaultTo("default");
+      .defaultTo("banana");
     table.date("applicationDeadline");
     table.integer("rating");
+    table.text("description");
+    table.string("location");
+    table.text("notes");
   });
 };
 
@@ -16,8 +19,11 @@ exports.down = async function(knex) {
     table
       .string("url")
       .notNull()
-      .defaultTo("default");
+      .defaultTo("banana");
     table.dropColumn("applicationDeadline");
     table.dropColumn("rating");
+    table.dropColumn("description");
+    table.dropColumn("location");
+    table.dropColumn("notes");
   });
 };
