@@ -7,9 +7,8 @@ beforeEach(async () => {
 
 describe('userModel', () => {
     test('find', async () => {
-        const res = await userModel.list()
-        expect(res.length).toBeGreaterThan(0)
-        expect(res.firstName[0]).toBe('Rose')
-        expect(res.email[0]).toBe('rose@gmail.com')
+        const res = await userModel.find()
+        expect(res.length).toBe(3)
+        expect(res[0].email).toBe('don@email.com')
     })
 })

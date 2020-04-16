@@ -39,7 +39,7 @@ async function updateJob(id, job_update) {
   await db("jobPosts")
     .where({ id })
     .update(job_update)
-    .returning("*");
+  return findJobById(id)
 }
 
 module.exports = {
