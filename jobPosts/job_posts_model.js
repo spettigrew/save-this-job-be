@@ -36,12 +36,18 @@ function removeJob(id) {
 }
 
 // needs to return updated job - is not currenty
+// async function updateJob(id, job_update) {
+//   await db("jobPosts")
+//     .where({ id })
+//     .update(job_update)
+
+//   return findJobById({ id });
+// }
 async function updateJob(id, job_update) {
   await db("jobPosts")
     .where({ id })
-    .update(job_update)
-
-  return findJobById({ id });
+    .update(job_update);
+  return findJobById(id);
 }
 
 module.exports = {
