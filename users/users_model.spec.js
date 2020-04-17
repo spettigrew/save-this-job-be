@@ -25,4 +25,9 @@ describe('userModel', () => {
         expect(res.length).toBe(1);
         console.log(res)
     })
+    test('findByEmail', async () => {
+        const res = await userModel.findByEmail('rose@gmail.com');
+        expect(res.firstName).toBe('Rose');
+        expect(res.lastName).toBe('Jones');
+    })
 })

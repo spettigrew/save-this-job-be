@@ -16,11 +16,12 @@ function removeTag(id) {
     .del();
 }
 
+// update needs work - does not return anything
 async function updateTag(id, tag_update) {
   await db("jobTags")
     .where({ id })
     .update(tag_update)
-    .returning("*");
+    // .returning("*");
 }
 
 module.exports = {

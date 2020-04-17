@@ -33,13 +33,14 @@ describe('jobModel', () => {
         expect(res[0].companyTitle).toBe('Amazon');
         expect(res[0].location).toBe('Seattle');
     })
-    // test('updateJob', async () => {
-    //     await jobModel.updateJob(4, {
-    //         rating: 1
-    //     })
-    //     const updatedJob = await jobModel.findJobById(4);
-    //     expect(updatedJob.rating).toBe(1);
-    // })
+    test('updateJob', async () => {
+        const res = await jobModel.updateJob(4, {
+            rating: 1
+        })
+        console.log(res)
+        // const updatedJob = await jobModel.findJobById(4);
+        // expect(updatedJob.rating).toBe(1);
+    })
     test('removeJob', async () => {
         const res = await jobModel.removeJob(4);
         expect(res).toBe(0);
