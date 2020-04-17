@@ -23,7 +23,6 @@ describe('userModel', () => {
                 email: 'jane@gmail.com'
             });
         expect(res.length).toBe(1);
-        console.log(res)
     })
     test('findByEmail', async () => {
         const res = await userModel.findByEmail('rose@gmail.com');

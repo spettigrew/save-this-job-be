@@ -34,12 +34,11 @@ describe('jobModel', () => {
         expect(res[0].location).toBe('Seattle');
     })
     test('updateJob', async () => {
-        const res = await jobModel.updateJob(4, {
+        await jobModel.updateJob(1, {
             rating: 1
         })
-        console.log(res)
-        // const updatedJob = await jobModel.findJobById(4);
-        // expect(updatedJob.rating).toBe(1);
+        const updatedJob = await jobModel.findJobById(1);
+        expect(updatedJob.rating).toBe(1);
     })
     test('removeJob', async () => {
         const res = await jobModel.removeJob(4);

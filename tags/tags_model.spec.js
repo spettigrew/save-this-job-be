@@ -11,12 +11,15 @@ describe('tags model', () => {
         expect(res.length).toBe(3)
         expect(res[0].tagName).toBe('remote')
     })
+    test('findTagById', async () => {
+        const res = await tagsModel.findTagById(2);
+        expect(res.tagName).toBe('part time');
+    })
     test('addTag', async () => {
         const res = await tagsModel.addTag({
                 tagName: 'great reviews'
             });
         expect(res.length).toBe(1);
-        console.log(res)
     })
     test('removeTag', async () => {
         const res = await tagsModel.removeTag('great reviews');
@@ -24,8 +27,6 @@ describe('tags model', () => {
     })
     test('updateTag', async () => {
         const res = await tagsModel.updateTag(2, {tagName: 'part-time'});
-        console.log(res)
-        // expect(res[0].firstName).toBe('Don');
-        // expect(res[0].email).toBe('don@email.com')
+        expect(res.tagName).toBe('part-time');
     })
 })

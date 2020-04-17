@@ -31,7 +31,6 @@ function removeJob(id) {
     .del();
 }
 
-// needs to return updated job - comes back undefined
 async function updateJob(id, job_update) {
   await db("jobPosts")
     .where({ id })
