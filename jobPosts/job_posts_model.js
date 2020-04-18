@@ -10,8 +10,6 @@ async function addJob(newJob, id) {
     .insert(newJob);
 }
 
-// find specific job post
-
 async function findJobById(id) {
   const job = await db("jobPosts")
     .select()
@@ -27,8 +25,6 @@ function findJobByUser(users_id) {
     .where({ users_id });
 }
 
-// need to find all job posts under user id
-
 function removeJob(id) {
   return db("jobPosts")
     .where({ id })
@@ -38,8 +34,8 @@ function removeJob(id) {
 async function updateJob(id, job_update) {
   await db("jobPosts")
     .where({ id })
-    .update(job_update)
-    .returning("*");
+    .update(job_update);
+  return findJobById(id);
 }
 
 module.exports = {
