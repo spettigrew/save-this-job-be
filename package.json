@@ -28,7 +28,7 @@
     "start": "node index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --watchAll --coverage",
     "server": "nodemon -r dotenv/config index.js",
-    "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
+    "coverage": "CI=true jest --coverage --detectOpenHandles --forceExit || true"
   },
   "repository": {
     "type": "git",
