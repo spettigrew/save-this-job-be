@@ -9,12 +9,12 @@ const oktaJwtVerifier = new OktaJwtVerifier({
 });
 
 function authenticationRequired(req, res, next) {
+  if(process.env.NODE_ENV === 'test') {
+    return next();
+  }
+  
   const authHeader = req.headers.authorization || "";
   const match = authHeader.match(/Bearer (.+)/);
-  
-  if(process.env.NODE_ENV === 'test') {
-    next();
-  }
 
   if (!match) {
     return res
