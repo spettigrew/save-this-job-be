@@ -1,0 +1,8 @@
+exclude_patterns:
+  - "tests/"
+  - "spec/"
+  - "**/*.spec.js"
+  - "**/vendor/"
+  - "**/node_modules/"
+  - "**/database/migrations/"
+  - "**/database/seeds/"
