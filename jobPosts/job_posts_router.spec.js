@@ -7,13 +7,13 @@ beforeAll(async () => {
   await db.seed.run();
 });
 
-describe("tags router", () => {
+describe("jobPosts router", () => {
   describe("get", () => {
-    it("should get all tags, return 200", async () => {
+    it("should get all users' jobs, return 200", async () => {
       const res = await supertest(server)
 
       expect(res.status).toBe(200);
       expect(res.type).toBe("application/json");
       console.log(res);
-    });
+    })
 })});
