@@ -1,4 +1,6 @@
+require("dotenv").config()
 const OktaJwtVerifier = require("@okta/jwt-verifier");
+
 
 const oktaJwtVerifier = new OktaJwtVerifier({
   issuer: process.env.OKTA_ORG,
@@ -9,6 +11,10 @@ const oktaJwtVerifier = new OktaJwtVerifier({
 });
 
 function authenticationRequired(req, res, next) {
+  if(process.env.NODE_ENV === 'test') {
+    return next();
+  }
+  
   const authHeader = req.headers.authorization || "";
   const match = authHeader.match(/Bearer (.+)/);
 

@@ -8,6 +8,7 @@ beforeEach(async () => {
 describe('jobModel', () => {
     test('findJob', async () => {
         const res = await jobModel.findJob();
+        
         expect(res.length).toBe(3);
         expect(res[0].companyTitle).toBe('Amazon');
         expect(res[2].description).toBe('Stalk people');
