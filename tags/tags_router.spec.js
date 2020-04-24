@@ -13,7 +13,7 @@ describe("tags router", () => {
   describe("get", () => {
     it("should get all tags, return 200", async () => {
       const res = await supertest(server).get('/')
-
+      
       expect(res.status).toBe(200);
       expect(res.type).toBe("application/json");
     });

@@ -1,7 +1,7 @@
 const db = require('../database/db-config');
 const jobModel = require('./job_posts_model');
 
-beforeEach(async () => {
+beforeAll(async () => {
     await db.seed.run()
 })
 
@@ -42,7 +42,7 @@ describe('jobModel', () => {
         expect(updatedJob.rating).toBe(1);
     })
     test('removeJob', async () => {
-        const res = await jobModel.removeJob(4);
-        expect(res).toBe(0);
+        const res = await jobModel.removeJob(2);
+        expect(res).toBe(1);
     })
 })

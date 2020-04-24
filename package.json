@@ -26,9 +26,9 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose --watchAll --coverage",
+    "test": "cross-env NODE_ENV=test jest --verbose --watchAll --coverage --runInBand",
     "server": "nodemon -r dotenv/config index.js",
-    "coverage": "CI=true jest --coverage --detectOpenHandles --forceExit || true"
+    "coverage": "CI=true jest --coverage --detectOpenHandles --forceExit --runInBand || true"
   },
   "repository": {
     "type": "git",
