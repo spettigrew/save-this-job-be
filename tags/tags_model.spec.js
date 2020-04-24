@@ -1,7 +1,7 @@
 const db = require('../database/db-config');
 const tagsModel = require('./tags_model');
 
-beforeEach(async () => {
+beforeAll(async () => {
     await db.seed.run()
 })
 
