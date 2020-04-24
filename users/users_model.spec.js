@@ -1,7 +1,7 @@
 const db = require('../database/db-config');
 const userModel = require('./users-model');
 
-beforeEach(async () => {
+beforeAll(async () => {
     await db.seed.run()
 })
 
