@@ -28,7 +28,12 @@
     "start": "node index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --watchAll --coverage --runInBand",
     "server": "nodemon -r dotenv/config index.js",
-    "coverage": "CI=true jest --coverage --detectOpenHandles --forceExit --runInBand || true"
+    "coverage": "CI=true jest --coverage --detectOpenHandles --forceExit --runInBand || true",
+    "db:migrate:rollback": "knex migrate:rollback",
+    "db:migrate:latest": "knex migrate:latest",
+    "db:seed:run": "knex seed:run",
+    "db:test": "cross-env NODE_ENV=test npm run db:migrate:rollback && cross-env NODE_ENV=test npm run db:migrate:latest && cross-env NODE_ENV=test npm run db:seed:run",
+    "db:dev": "npm run db:migrate:rollback && npm run db:migrate:latest && npm run db:seed:run"
   },
   "repository": {
     "type": "git",
