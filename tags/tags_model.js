@@ -4,6 +4,12 @@ function findTags() {
   return db("jobTags").select();
 }
 
+function findTagByUser(users_id) {
+  return db("jobTags")
+    .select()
+    .where({ users_id });
+}
+
 async function findTagById(id) {
   const tag = await db("jobTags")
     .select()
@@ -34,6 +40,7 @@ async function updateTag(id, tag_update) {
 
 module.exports = {
   findTags,
+  findTagByUser,
   findTagById,
   addTag,
   removeTag,

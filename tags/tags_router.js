@@ -1,17 +1,27 @@
 const express = require("express");
 const router = express.Router();
 const tagMod = require("./tags_model");
+const authenticationRequired = require("../middleware/oktaJwtVerifier");
+const checkUser = require("../middleware/checkUser");
 
-router.get("/", async (req, res, next) => {
+router.get(
+  "/", 
+  authenticationRequired, 
+  checkUser, 
+  async (req, res, next) => {
   try {
-    const tags = await tagMod.findTags();
+    const tags = await tagMod.findTagByUser(req.userId);
     res.status(200).json(tags);
   } catch (err) {
     next(err);
   }
 });
 
-router.post("/addTag", async (req, res, next) => {
+router.post(
+  "/addTag",
+  authenticationRequired, 
+  checkUser, 
+  async (req, res, next) => {
   try {
     const { id } = req.params;
     const newTag = await tagMod.addTag(req.body, id);
@@ -29,7 +39,10 @@ router.post("/addTag", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete(
+  "/:id", 
+  authenticationRequired,
+  async (req, res, next) => {
   try {
     const { id } = req.params;
     const tag = await tagMod.removeTag(id);
@@ -51,7 +64,11 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put(
+  "/:id", 
+  authenticationRequired, 
+  checkUser,
+  async (req, res, next) => {
   try {
     const { id } = req.params;
     const updatedTag = await tagMod.updateTag(id, req.body);
