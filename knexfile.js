@@ -33,6 +33,10 @@ const deployedDB = {
         max: 10
     }
 };
+
+console.log(localDB)
+console.log(process.env.NODE_ENV)
+
 module.exports = {
     development: {
         ...localDB
