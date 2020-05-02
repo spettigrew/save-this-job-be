@@ -34,9 +34,6 @@ const deployedDB = {
     }
 };
 
-console.log(localDB)
-console.log(process.env.NODE_ENV)
-
 module.exports = {
     development: {
         ...localDB

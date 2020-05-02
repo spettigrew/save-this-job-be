@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const jobMod = require("../jobPosts/job_posts_model.js");
+const tagsRouter = require("../tags/tags_router");
 const authenticationRequired = require("../middleware/oktaJwtVerifier");
 const checkUser = require("../middleware/checkUser");
+
+router.use("/:id/tags", tagsRouter);
 
 // Grab user jobs
 router.get(

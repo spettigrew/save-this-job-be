@@ -4,10 +4,10 @@ function findTags() {
   return db("jobTags").select();
 }
 
-function findTagByUser(users_id) {
+function findTagsByUser(userId) {
   return db("jobTags")
     .select()
-    .where({ users_id });
+    .where({ userId });
 }
 
 async function findTagById(id) {
@@ -40,7 +40,7 @@ async function updateTag(id, tag_update) {
 
 module.exports = {
   findTags,
-  findTagByUser,
+  findTagsByUser,
   findTagById,
   addTag,
   removeTag,
