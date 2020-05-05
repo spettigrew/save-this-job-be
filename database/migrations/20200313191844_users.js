@@ -1,5 +1,5 @@
 exports.up = async function(knex) {
-  await knex.schema.createTable("users", table => {
+  await knex.schema.createTable("users", (table) => {
     table.increments("id");
     table.string("firstName", 128).notNull();
     table.string("lastName", 128).notNull();
@@ -9,7 +9,12 @@ exports.up = async function(knex) {
       .unique();
   });
 
-  await knex.schema.createTable("jobPosts", table => {
+  await knex.schema.createTable("columns", (table) => {
+    table.increments("id");
+    table.string("name").notNull();
+  });
+
+  await knex.schema.createTable("jobPosts", (table) => {
     table.increments("id");
     table.string("jobTitle").notNull();
     table.string("url").notNull();
@@ -22,10 +27,17 @@ exports.up = async function(knex) {
       .inTable("users")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
+    table
+      .integer("column_id")
+      .references("id")
+      .inTable("columns")
+      .onDelete("CASCADE")
+      .onUpdate("CASCADE");
   });
 };
 
 exports.down = async function(knex) {
   await knex.schema.dropTableIfExists("jobPosts");
+  await knex.schema.dropTableIfExists("columns");
   await knex.schema.dropTableIfExists("users");
 };
