@@ -9,11 +9,6 @@ exports.up = async function(knex) {
       .unique();
   });
 
-  await knex.schema.createTable("columns", (table) => {
-    table.increments("id");
-    table.string("name").notNull();
-  });
-
   await knex.schema.createTable("jobPosts", (table) => {
     table.increments("id");
     table.string("jobTitle").notNull();
@@ -38,6 +33,5 @@ exports.up = async function(knex) {
 
 exports.down = async function(knex) {
   await knex.schema.dropTableIfExists("jobPosts");
-  await knex.schema.dropTableIfExists("columns");
   await knex.schema.dropTableIfExists("users");
 };
