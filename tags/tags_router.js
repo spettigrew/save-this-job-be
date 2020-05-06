@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/addTag", async (req, res, next) => {
+router.post("/addTag/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const newTag = await tagMod.addTag(req.body, id);
