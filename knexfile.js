@@ -33,6 +33,7 @@ const deployedDB = {
         max: 10
     }
 };
+
 module.exports = {
     development: {
         ...localDB

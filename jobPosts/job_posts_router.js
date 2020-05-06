@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const jobMod = require("../jobPosts/job_posts_model.js");
+const tagsRouter = require("../tags/tags_router");
 const authenticationRequired = require("../middleware/oktaJwtVerifier");
 const checkUser = require("../middleware/checkUser");
+
+router.use("/:id/tags", tagsRouter);
 
 // Grab user jobs
 router.get(
@@ -31,11 +34,11 @@ router.post(
       );
       if (job) {
         res.status(201).json({
-          message: "Job Post Created"
+          message: "Job post created"
         });
       } else {
         send.status(500).json({
-          message: "Error Saving Job Post, please try again later"
+          message: "Error saving job post, please try again later"
         });
       }
     } catch (err) {
