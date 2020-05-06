@@ -20,9 +20,9 @@ async function findTagById(id) {
 }
 
 async function addTag(newTag, id) {
+const {tagName} = newTag
   return db("jobTags")
-    .where({ id })
-    .insert(newTag);
+    .insert({tagName,jobPosts_id:id});
 }
 
 function removeTag(id) {

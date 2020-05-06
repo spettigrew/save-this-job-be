@@ -19,25 +19,18 @@ router.get(
   }
 });
 
-router.post(
-  "/addTag",
-  authenticationRequired, 
-  checkUser, 
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const newTag = await tagMod.addTag(req.body, id);
-      if (newTag) {
-        res.status(201).json({
-          message: "New tag created"
-        });
-      } else {
-        send.status(500).json({
-          message: "Error saving new tag, please try again later"
-        });
-      }
-    } catch (err) {
-      next(err);
+router.post("/addTag/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const newTag = await tagMod.addTag(req.body, id);
+    if (newTag) {
+      res.status(201).json({
+        message: "New Tag Created"
+      });
+    } else {
+      send.status(500).json({
+        message: "Error Saving New Tag, please try again later"
+      });
     }
   }
 );
