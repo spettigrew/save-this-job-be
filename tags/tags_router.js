@@ -6,7 +6,6 @@ router.get("/", async (req, res, next) => {
   try {
     const tags = await tagMod.findTags();
     res.status(200).json(tags);
-    console.log(tags)
   } catch (err) {
     next(err);
   }
