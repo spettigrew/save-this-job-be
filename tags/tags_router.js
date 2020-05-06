@@ -6,12 +6,14 @@ router.get("/", async (req, res, next) => {
   try {
     const tags = await tagMod.findTags();
     res.status(200).json(tags);
+    console.log(tags)
   } catch (err) {
     next(err);
   }
 });
 
-router.post("/addTag", async (req, res, next) => {
+router.post("/addTag/:id", async (req, res, next) => {
+  console.log(req.body)
   try {
     const { id } = req.params;
     const newTag = await tagMod.addTag(req.body, id);
