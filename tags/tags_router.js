@@ -32,8 +32,10 @@ router.post("/addTag/:id", async (req, res, next) => {
         message: "Error Saving New Tag, please try again later"
       });
     }
+  } catch (err) {
+    next(err)
   }
-);
+});
 
 router.delete(
   "/removeTag/:id", 
