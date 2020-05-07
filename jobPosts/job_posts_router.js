@@ -98,4 +98,18 @@ router.put(
   }
 );
 
+router.get(
+  "/columns",
+  authenticationRequired,
+  checkUser,
+  async (req, res, next) => {
+    try {
+      const columns = await jobMod.findColumn();
+      res.status(200).json(columns);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 module.exports = router;

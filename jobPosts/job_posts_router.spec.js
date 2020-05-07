@@ -18,4 +18,11 @@ describe("jobPosts router", () => {
       expect(res.type).toBe("application/json");
         })
     })
+    it("should return column, return 200", async () => {
+      const res = await supertest(server).get('/users/columns')
+
+      expect(res.type).toBe("application/json");
+      expect(res.status).toBe(200);
+      expect(res.text).toBe("[{\"column_id\":\"Interested\"},{\"column_id\":\"Applied\"},{\"column_id\":\"Interviewed\"}]")
+    })
 });

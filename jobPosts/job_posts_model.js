@@ -38,11 +38,16 @@ async function updateJob(id, job_update) {
   return findJobById(id);
 }
 
+function findColumn() {
+  return db("jobPosts").select("column_id");
+}
+
 module.exports = {
   addJob,
   findJob,
   findJobById,
   removeJob,
   findJobByUser,
-  updateJob
+  updateJob,
+  findColumn
 };

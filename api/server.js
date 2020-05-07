@@ -3,7 +3,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const jobPostsRouter = require("../jobPosts/job_posts_router");
 const tagsRouter = require("../tags/tags_router");
-const colRouter = require("../columns/columns_router");
+// const colRouter = require("../columns/columns_router");
 
 const server = express();
 
@@ -13,7 +13,7 @@ server.use(express.json());
 
 server.use("/users", jobPostsRouter);
 server.use("/tags", tagsRouter);
-server.use("/users", colRouter);
+// server.use("/users", colRouter);
 
 server.get("/", (req, res, next) => {
   res.json({ message: "sanity check" });
