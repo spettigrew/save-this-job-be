@@ -7,7 +7,8 @@ function getTasks() {
 function getTasksById(taskId) {
     return db("tasks")
         .select()
-        .where({ taskId });
+        .where({ id: taskId })
+        .first();
 }
 
 async function addTask(newTask) {
