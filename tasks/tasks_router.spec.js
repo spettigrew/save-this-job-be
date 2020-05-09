@@ -12,11 +12,11 @@ beforeAll(async () => {
 describe("tasks router", () => {
     describe("get tasks", () => {
         it("should get all tasks, return 200", async () => {
-            const res = await supertest(server).get('/');
+            const res = await supertest(server).get('/users/tasks');
 
+            expect(res.body).toHaveLength(3);
             expect(res.status).toBe(200)
             expect(res.type).toBe("application/json")
-            console.log(res)
         })
     })
 })
