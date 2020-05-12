@@ -4,7 +4,7 @@ function getTasks() {
     return db("tasks").select();
 }
 
-function getTasksById(taskId) {
+function getTaskById(taskId) {
     return db("tasks")
         .select()
         .where({ id: taskId })
@@ -12,24 +12,24 @@ function getTasksById(taskId) {
 }
 
 async function addTask(newTask) {
-    const added = await db("tasks").insert( newTask );
-    return getTasksById(added);
+    const [added] = await db("tasks").insert( newTask );
+    return getTaskById(added);
 }
 
 async function updateTask(taskId, updates) {
-    await db("tasks").where({ taskId }).update(updates);
-    return getTasksById(taskId);
+    await db("tasks").where({ id: taskId }).update(updates);
+    return getTaskById(taskId);
 }
 
 function deleteTask(taskId) {
     return db("tasks")
-        .where({ taskId })
+        .where({ id: taskId })
         .del();
 }
 
 module.exports = {
     getTasks,
-    getTasksById,
+    getTaskById,
     addTask,
     updateTask,
     deleteTask,

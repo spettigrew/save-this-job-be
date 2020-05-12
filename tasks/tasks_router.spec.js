@@ -31,10 +31,28 @@ describe("tasks router", () => {
             const res = await supertest(server).post('/users/tasks').send({
                 taskName: "Update resume"
             })
-            console.log(res);
-            // expect(res.status).toBe(201);
-            // expect(res.type).toBe("application/json");
-            // expect(res.body.taskName).toBe("Update resume");
+            expect(res.status).toBe(201);
+            expect(res.type).toBe("application/json");
+            expect(res.body.message).toBe("New task created");
+        })
+    })
+    describe("update task", () =>{
+        it("should edit the new task, return 200", async() => {
+            const res = await supertest(server).put('/users/tasks/1').send({
+                completed: 1
+            })
+
+            expect(res.status).toBe(200);
+            expect(res.type).toBe("application/json");
+            expect(res.body.message).toBe("Task has been updated");
+        })
+    })
+    describe("delete task", () => {
+        it("should delete the task, status 204", async() => {
+            const res = await supertest(server).del('/users/tasks/2')
+
+            console.log(res, "DELETED")
+            expect(res.status).toBe(204)
         })
     })
 })
