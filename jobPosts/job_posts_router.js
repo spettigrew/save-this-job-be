@@ -37,7 +37,7 @@ router.post(
           message: "Job post created"
         });
       } else {
-        send.status(500).json({
+        res.status(500).json({
           message: "Error saving job post, please try again later"
         });
       }
