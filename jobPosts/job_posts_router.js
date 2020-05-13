@@ -27,7 +27,7 @@ router.get(
 router.post(
   "/addJob",
   authenticationRequired,
-  // checkUser,
+  checkUser,
   async (req, res, next) => {
     try {
       const job = await jobMod.addJob(
@@ -80,7 +80,7 @@ router.delete(
 router.put(
   "/updateJob/:id",
   authenticationRequired,
-  // checkUser,
+  checkUser,
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -103,7 +103,7 @@ router.put(
 router.get(
   "/columns",
   authenticationRequired,
-  // checkUser,
+  checkUser,
   async (req, res, next) => {
     try {
       const columns = await jobMod.findColumn();
