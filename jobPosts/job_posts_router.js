@@ -3,8 +3,6 @@ const router = express.Router();
 const jobMod = require("../jobPosts/job_posts_model.js");
 const tagsRouter = require("../tags/tags_router");
 const tasksRouter = require("../tasks/tasks_router");
-const authenticationRequired = require("../middleware/oktaJwtVerifier");
-const checkUser = require("../middleware/checkUser");
 
 router.use("/:id/tags", tagsRouter);
 router.use("/tasks", tasksRouter);
@@ -12,8 +10,6 @@ router.use("/tasks", tasksRouter);
 // Grab user jobs
 router.get(
   "/jobs",
-  authenticationRequired,
-  checkUser,
   async (req, res, next) => {
     try {
       const jobPosts = await jobMod.findJobByUser(req.userId);
@@ -26,8 +22,6 @@ router.get(
 //  add job to user
 router.post(
   "/addJob",
-  authenticationRequired,
-  checkUser,
   async (req, res, next) => {
     try {
       const job = await jobMod.addJob(
@@ -51,7 +45,6 @@ router.post(
 // remove job from user
 router.delete(
   "/removeJob/:id",
-  authenticationRequired,
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -79,8 +72,6 @@ router.delete(
 
 router.put(
   "/updateJob/:id",
-  authenticationRequired,
-  checkUser,
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -102,8 +93,6 @@ router.put(
 
 router.get(
   "/columns",
-  authenticationRequired,
-  checkUser,
   async (req, res, next) => {
     try {
       const columns = await jobMod.findColumn();
