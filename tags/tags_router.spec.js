@@ -18,7 +18,7 @@ describe("tags router", () => {
       expect(res.type).toBe("application/json");
     });
     it("should add a new tag to user's job post, return 201", async () => {
-      const res = await supertest(server).post('/users/1/tags/addTag').send({
+      const res = await supertest(server).post('/users/1/tags/addTag/1').send({
         tagName: "short commute"
       })
       expect(res.status).toBe(201);

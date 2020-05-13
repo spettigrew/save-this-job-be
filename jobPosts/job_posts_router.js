@@ -2,16 +2,18 @@ const express = require("express");
 const router = express.Router();
 const jobMod = require("../jobPosts/job_posts_model.js");
 const tagsRouter = require("../tags/tags_router");
+const tasksRouter = require("../tasks/tasks_router");
 const authenticationRequired = require("../middleware/oktaJwtVerifier");
-const checkUser = require("../middleware/checkUser");
+// const checkUser = require("../middleware/checkUser");
 
 router.use("/:id/tags", tagsRouter);
+router.use("/tasks", tasksRouter);
 
 // Grab user jobs
 router.get(
   "/jobs",
   authenticationRequired,
-  checkUser,
+  // checkUser,
   async (req, res, next) => {
     try {
       const jobPosts = await jobMod.findJobByUser(req.userId);
@@ -25,7 +27,7 @@ router.get(
 router.post(
   "/addJob",
   authenticationRequired,
-  checkUser,
+  // checkUser,
   async (req, res, next) => {
     try {
       const job = await jobMod.addJob(
@@ -78,7 +80,7 @@ router.delete(
 router.put(
   "/updateJob/:id",
   authenticationRequired,
-  checkUser,
+  // checkUser,
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -92,6 +94,20 @@ router.put(
           message: "Error Updating Job Post, please try again later"
         });
       }
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.get(
+  "/columns",
+  authenticationRequired,
+  // checkUser,
+  async (req, res, next) => {
+    try {
+      const columns = await jobMod.findColumn();
+      res.status(200).json(columns);
     } catch (err) {
       next(err);
     }
