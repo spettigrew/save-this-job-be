@@ -4,12 +4,12 @@ const router = express.Router({
 });
 const tagMod = require("./tags_model");
 const authenticationRequired = require("../middleware/oktaJwtVerifier");
-const checkUser = require("../middleware/checkUser");
+// const checkUser = require("../middleware/checkUser");
 
 router.get(
   "/", 
   authenticationRequired, 
-  checkUser, 
+  // checkUser, 
   async (req, res, next) => {
   try {
     const tags = await tagMod.findTags();
@@ -19,28 +19,23 @@ router.get(
   }
 });
 
-router.post(
-  "/addTag",
-  authenticationRequired, 
-  checkUser, 
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const newTag = await tagMod.addTag(req.body, id);
-      if (newTag) {
-        res.status(201).json({
-          message: "New tag created"
-        });
-      } else {
-        send.status(500).json({
-          message: "Error saving new tag, please try again later"
-        });
-      }
-    } catch (err) {
-      next(err);
+router.post("/addTag/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const newTag = await tagMod.addTag(req.body, id);
+    if (newTag) {
+      res.status(201).json({
+        message: "New tag created"
+      });
+    } else {
+      send.status(500).json({
+        message: "Error saving new tag, please try again later"
+      });
     }
+  } catch (err) {
+    next(err)
   }
-);
+});
 
 router.delete(
   "/removeTag/:id", 
@@ -70,7 +65,7 @@ router.delete(
 router.put(
   "/updateTag/:id", 
   authenticationRequired, 
-  checkUser,
+  // checkUser,
   async (req, res, next) => {
   try {
     const { id } = req.params;

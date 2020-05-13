@@ -9,11 +9,6 @@ exports.up = async function(knex) {
       .unique();
   });
 
-  await knex.schema.createTable("columns", (table) => {
-    table.increments("id");
-    table.string("name").notNull();
-  });
-
   await knex.schema.createTable("jobPosts", (table) => {
     table.increments("id");
     table.string("jobTitle").notNull();
@@ -27,17 +22,12 @@ exports.up = async function(knex) {
       .inTable("users")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
-    table
-      .integer("column_id")
-      .references("id")
-      .inTable("columns")
-      .onDelete("CASCADE")
-      .onUpdate("CASCADE");
+    table.string("column_id")
+    table.integer("index")
   });
 };
 
 exports.down = async function(knex) {
   await knex.schema.dropTableIfExists("jobPosts");
-  await knex.schema.dropTableIfExists("columns");
   await knex.schema.dropTableIfExists("users");
 };
