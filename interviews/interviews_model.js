@@ -1,7 +1,9 @@
 const db = require("../database/db-config");
 
-function getInterviews() {
-    return db("interviews").select();
+function getInterviews(jobPostId) {
+    return db("interviews")
+        .select()
+        .where({ jobPosts_id: jobPostId });
 }
 
 function getInterviewById(interviewId) {
