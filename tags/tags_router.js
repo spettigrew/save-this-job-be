@@ -3,11 +3,9 @@ const router = express.Router({
   mergeParams: true,
 });
 const tagMod = require("./tags_model");
-const authenticationRequired = require("../middleware/oktaJwtVerifier");
 
 router.get(
   "/", 
-  authenticationRequired, 
   async (req, res, next) => {
   try {
     const tags = await tagMod.findTags();
@@ -37,7 +35,6 @@ router.post("/addTag/:id", async (req, res, next) => {
 
 router.delete(
   "/removeTag/:id", 
-  authenticationRequired,
   async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -62,7 +59,6 @@ router.delete(
 
 router.put(
   "/updateTag/:id", 
-  authenticationRequired, 
   async (req, res, next) => {
   try {
     const { id } = req.params;
