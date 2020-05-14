@@ -14,7 +14,6 @@ describe("interviews router", () => {
         it("should get all interviews, return 200", async () => {
             const res = await supertest(server).get(`/users/interviews`);
 
-            console.log(res);
             expect(res.status).toBe(200);
             expect(res.type).toBe("application/json");
             expect(res.body).toHaveLength(3);

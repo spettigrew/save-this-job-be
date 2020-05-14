@@ -38,19 +38,16 @@ router.delete(
   async (req, res, next) => {
   try {
     const { id } = req.params;
-    const tag = await tagMod.removeTag(id);
-    const count = await tagMod.removeTag(id);
+    const deletedTag = await tagMod.removeTag(id);
 
-    if (!tag) {
+    if (!deletedTag) {
       return res
         .status(400)
         .json({ message: "The tag you are trying to delete does not exist" });
     }
 
-    if (count > 0) {
-      res.json({ message: "Tag successfully deleted" });
-    } else {
-      res.status(500).json({ message: "There was an error deleting your tag" });
+    if (deletedTag > 0) {
+      res.status(200).json({ message: "Tag successfully deleted" });
     }
   } catch (err) {
     next(err);
@@ -65,7 +62,7 @@ router.put(
     const updatedTag = await tagMod.updateTag(id, req.body);
     if (updatedTag) {
       res.status(200).json({
-        message: "Tag Updated"
+        message: "Tag updated"
       });
     } else {
       send.status(500).json({
