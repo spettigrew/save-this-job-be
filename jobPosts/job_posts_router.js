@@ -3,7 +3,7 @@ const router = express.Router();
 const jobMod = require("../jobPosts/job_posts_model.js");
 const tagsRouter = require("../tags/tags_router");
 const tasksRouter = require("../tasks/tasks_router");
-const interviewsRouter = require("../interviews/interviews_router");
+// const interviewsRouter = require("../interviews/interviews_router");
 
 router.use("/tags", tagsRouter);
 router.use("/tasks", tasksRouter);
@@ -80,11 +80,11 @@ router.put(
       const updatedJob = await jobMod.updateJob(id, req.body);
       if (updatedJob) {
         res.status(200).json({
-          message: "Job Post Updated"
+          message: "Job post updated"
         });
       } else {
         send.status(500).json({
-          message: "Error Updating Job Post, please try again later"
+          message: "Error updating job jost, please try again later"
         });
       }
     } catch (err) {
