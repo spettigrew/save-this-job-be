@@ -4,7 +4,7 @@ const jobMod = require("../jobPosts/job_posts_model.js");
 const tagsRouter = require("../tags/tags_router");
 const tasksRouter = require("../tasks/tasks_router");
 
-router.use("/:id/tags", tagsRouter);
+router.use("/tags", tagsRouter);
 router.use("/tasks", tasksRouter);
 
 // Grab user jobs
