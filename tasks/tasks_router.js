@@ -30,7 +30,7 @@ router.get(
 )
 
 router.post(
-    "/",
+    "/addTask",
     async (req, res, next) => {
         try {
             const addedTask = await tasksModel.addTask(req.body);
