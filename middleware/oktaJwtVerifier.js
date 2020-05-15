@@ -11,6 +11,7 @@ const oktaJwtVerifier = new OktaJwtVerifier({
 });
 
 function authenticationRequired(req, res, next) {
+  console.log('hit')
   if(process.env.NODE_ENV === 'test') {
     return next();
   }
@@ -30,6 +31,7 @@ function authenticationRequired(req, res, next) {
   return oktaJwtVerifier
     .verifyAccessToken(accessToken, expectedAudience)
     .then(jwt => {
+    
       req.jwt = jwt;
       next();
     })
