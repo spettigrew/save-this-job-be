@@ -1,13 +1,11 @@
 const express = require("express");
 const tasksModel = require("./tasks_model");
-const authenticationRequired = require("../middleware/oktaJwtVerifier");
 const router = express.Router({
     mergeParams: true,
 })
 
 router.get(
     "/",
-    authenticationRequired,
     async (req, res, next) => {
         try{
             const tasks = await tasksModel.getTasks();
@@ -20,7 +18,6 @@ router.get(
 
 router.get(
     "/:taskId",
-    authenticationRequired,
     async (req, res, next) => {
         try {
             const taskId = req.params.taskId;
@@ -33,8 +30,7 @@ router.get(
 )
 
 router.post(
-    "/",
-    authenticationRequired,
+    "/addTask",
     async (req, res, next) => {
         try {
             const addedTask = await tasksModel.addTask(req.body);
@@ -55,7 +51,6 @@ router.post(
 
 router.put(
     "/:taskId",
-    authenticationRequired,
     async (req, res, next) => {
         try {
             const taskId = req.params.taskId
@@ -78,7 +73,6 @@ router.put(
 
 router.delete(
     "/:taskId",
-    authenticationRequired,
     async (req, res, next) => {
         try {
             const deletedTask = await tasksModel.deleteTask(req.params.taskId)
