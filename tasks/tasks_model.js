@@ -1,24 +1,28 @@
 const db = require("../database/db-config");
 
-function getTasks() {
-    return db("tasks").select();
-}
-
-function getTaskById(taskId) {
+function getTasks(jobId) {
     return db("tasks")
-        .select()
-        .where({ id: taskId })
-        .first();
+        .join("jobPosts", "tasks.job_id", "jobPosts.id")
+        .where({job_id: jobId})
+        .select("jobPosts.jobTitle", "jobPosts.companyTitle", "tasks.taskName", "tasks.completed");
 }
 
-async function addTask(newTask) {
+function getTaskById(jobId, taskId) {
+    return db("tasks")
+        .join("jobPosts", "tasks.job_id", "jobPosts.id")
+        .where({job_id: jobId})
+        .where("tasks.id", taskId)
+        .select("jobPosts.jobTitle", "jobPosts.companyTitle", "tasks.taskName", "tasks.completed");
+}
+
+async function addTask(jobId, newTask) {
     const [added] = await db("tasks").insert( newTask );
-    return getTaskById(added);
+    return getTaskById(jobId, added);
 }
 
-async function updateTask(taskId, updates) {
+async function updateTask(jobId, taskId, updates) {
     await db("tasks").where({ id: taskId }).update(updates);
-    return getTaskById(taskId);
+    return getTaskById(jobId, taskId);
 }
 
 function deleteTask(taskId) {

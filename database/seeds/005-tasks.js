@@ -1,7 +1,7 @@
 exports.seed = async knex => {
   await knex("tasks").insert([
-    { taskName: "fifth day" },
-    { taskName: "sleep" },
-    { taskName: "weekend fun" },
+      { job_id: 1, taskName: "fifth day" },
+      { job_id: 1, taskName: "sleep" },
+      { job_id: 2, taskName: "weekend fun" },
   ]);
 };
