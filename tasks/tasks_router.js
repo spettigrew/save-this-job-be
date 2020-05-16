@@ -5,7 +5,7 @@ const router = express.Router({
 })
 
 router.get(
-    "/",
+    "/:jobId",
     async (req, res, next) => {
         const jobId = req.params.jobId
         try{
@@ -18,11 +18,12 @@ router.get(
 )
 
 router.get(
-    "/:taskId",
+    "/:jobId/:taskId",
     async (req, res, next) => {
         try {
             const taskId = req.params.taskId;
-            const singleTask = await tasksModel.getTaskById(taskId);
+            const jobId = req.params.jobId
+            const singleTask = await tasksModel.getTaskById(jobId, taskId);
             res.status(200).json(singleTask);
         } catch (err) {
             next(err);
@@ -31,10 +32,15 @@ router.get(
 )
 
 router.post(
-    "/",
+    "/:jobId/addTask",
     async (req, res, next) => {
         try {
-            const addedTask = await tasksModel.addTask(req.body);
+            const jobId = req.params.jobId
+            const body = {
+                job_id: jobId,
+                ...req.body
+            }
+            const addedTask = await tasksModel.addTask(jobId, body);
             if (addedTask) {
                 res.status(201).json({ 
                     message: "New task created"
@@ -51,11 +57,12 @@ router.post(
 )
 
 router.put(
-    "/:taskId",
+    "/:jobId/:taskId",
     async (req, res, next) => {
         try {
             const taskId = req.params.taskId
-            const updatedTask = await tasksModel.updateTask(taskId, req.body)
+            const jobId = req.params.jobId
+            const updatedTask = await tasksModel.updateTask(jobId, taskId, req.body)
             if (updatedTask) {
                 res.status(200).json({
                     message: "Task has been updated"

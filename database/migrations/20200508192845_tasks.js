@@ -10,6 +10,7 @@ exports.up = async function(knex) {
         .inTable("jobPosts")
         .onDelete("CASCADE")
         .onUpdate("CASCADE")
+        .notNull()
      table.boolean("completed").defaultTo(false);
     })
 };

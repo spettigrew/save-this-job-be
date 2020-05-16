@@ -11,25 +11,26 @@ beforeAll(async () => {
 describe("tasks router", () => {
     describe("get tasks", () => {
         it("should get all tasks, return 200", async () => {
-            const res = await supertest(server).get('/users/tasks');
+            const res = await supertest(server).get('/users/tasks/1');
 
-            expect(res.body).toHaveLength(3);
+            expect(res.text).toBe("[{\"jobTitle\":\"Junior Dev\",\"companyTitle\":\"Amazon\",\"taskName\":\"fifth day\",\"completed\":0},{\"jobTitle\":\"Junior Dev\",\"companyTitle\":\"Amazon\",\"taskName\":\"sleep\",\"completed\":0}]");
             expect(res.status).toBe(200)
             expect(res.type).toBe("application/json")
         })
         it("should get one task, return 200", async() => {
-            const res = await supertest(server).get('/users/tasks/1');
+            const res = await supertest(server).get('/users/tasks/1/1');
 
-            expect(res.body.taskName).toBe("fifth day");
+            expect(res.text).toBe('[{"jobTitle":"Junior Dev","companyTitle":"Amazon","taskName":"fifth day","completed":0}]');
             expect(res.status).toBe(200);
             expect(res.type).toBe("application/json");
         })
     })
     describe("add task", () => {
         it("should add new task, return 201", async() => {
-            const res = await supertest(server).post('/users/tasks').send({
+            const res = await supertest(server).post('/users/tasks/2/addTask').send({
                 taskName: "Update resume"
             })
+            
             expect(res.status).toBe(201);
             expect(res.type).toBe("application/json");
             expect(res.body.message).toBe("New task created");
@@ -37,7 +38,7 @@ describe("tasks router", () => {
     })
     describe("update task", () =>{
         it("should edit the new task, return 200", async() => {
-            const res = await supertest(server).put('/users/tasks/1').send({
+            const res = await supertest(server).put('/users/tasks/1/1').send({
                 completed: 1
             })
 

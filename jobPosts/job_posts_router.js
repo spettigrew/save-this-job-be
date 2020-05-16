@@ -6,7 +6,7 @@ const tasksRouter = require("../tasks/tasks_router");
 // const interviewsRouter = require("../interviews/interviews_router");
 
 router.use("/tags", tagsRouter);
-router.use("/:jobId/tasks", tasksRouter);
+router.use("/tasks", tasksRouter);
 // router.use("/interviews", interviewsRouter);
 
 // Grab user jobs
