@@ -11,7 +11,7 @@ const oktaJwtVerifier = new OktaJwtVerifier({
 });
 
 function authenticationRequired(req, res, next) {
-  console.log('hit')
+  // console.log('hit')
   if(process.env.NODE_ENV === 'test') {
     return next();
   }

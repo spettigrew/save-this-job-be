@@ -3,7 +3,6 @@ const server = require("../api/server");
 const db = require("../database/db-config");
 
 beforeAll(async () => {
-    console.log(`Interview tests called...`);
     await db.migrate.rollback();
     await db.migrate.latest();
     await db.seed.run();
