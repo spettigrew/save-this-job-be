@@ -7,8 +7,9 @@ const router = express.Router({
 router.get(
     "/",
     async (req, res, next) => {
+        const jobId = req.params.jobId
         try{
-            const tasks = await tasksModel.getTasks();
+            const tasks = await tasksModel.getTasks(jobId);
             res.status(200).json(tasks);
         } catch (err) {
             next(err);

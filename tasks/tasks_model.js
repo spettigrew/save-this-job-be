@@ -1,7 +1,9 @@
 const db = require("../database/db-config");
 
 function getTasks() {
-    return db("tasks").select();
+    return db("tasks")
+        .join("jobPosts", "tasks.jobId", "jobPost.id")
+        .select("jobPosts.jobTitle", "jobPosts.companyName", "tasks.taskName", "tasks.completed");
 }
 
 function getTaskById(taskId) {
