@@ -57,6 +57,15 @@ To get the server running locally:
 | DELETE | `/users/tags/removeTag/:id` | User Logged in | Delete a tag from job post                   |
 | PUT    | `/users/tags/updateTag/:id` | User logged in | Updates a tag for the logged in user.        |
 
+#### Tasks Routes
+
+| Method | Endpoint                      | Access Control | Description                                   |
+| ------ | ----------------------------- | -------------- | --------------------------------------------- |
+| GET    | `/users/tasks/:jobId`         | User logged in | Returns all tasks for the job of the user.    |
+| GET    | `/users/tasks/:jobId/:taskId` | User logged in | Returns one task for the job of the user.     |
+| POST   | `/users/tasks/:jobId/addTask` | User Logged in | Adds task to job on User profile              |
+| PUT    | `/users/tasks/:jobId/:taskId` | User logged in | Updates a task for the logged in user.        |
+| DELETE | `/users/tasks/:taskId`        | User Logged in | Delete a task from job post                   |
 
 # Data Model
 
