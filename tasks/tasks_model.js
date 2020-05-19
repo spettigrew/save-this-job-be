@@ -20,21 +20,24 @@ async function addTask(jobId, newTask) {
     return getTaskById(jobId, added);
 }
 
+
 async function updateTask(jobId, taskId, updates) {
-    await db("tasks").where({ id: taskId }).update(updates);
-    return getTaskById(jobId, taskId);
+  await db("tasks")
+    .where({ id: taskId })
+    .update(updates);
+  return getTaskById(jobId, taskId);
 }
 
 function deleteTask(taskId) {
-    return db("tasks")
-        .where({ id: taskId })
-        .del();
+  return db("tasks")
+    .where({ id: taskId })
+    .del();
 }
 
 module.exports = {
-    getTasks,
-    getTaskById,
-    addTask,
-    updateTask,
-    deleteTask,
-}
+  getTasks,
+  getTaskById,
+  addTask,
+  updateTask,
+  deleteTask,
+};
