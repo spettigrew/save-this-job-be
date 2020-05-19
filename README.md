@@ -42,11 +42,21 @@ To get the server running locally:
 
 | Method | Endpoint               | Access Control | Description                                   |
 | ------ | ---------------------- | -------------- | --------------------------------------------- |
-| GET    | `/users/jobs`          | User logged in | Returns All job posts for that user.          |
+| GET    | `/users/jobs`          | User logged in | Returns all job posts for that user.          |
 | POST   | `/users/addJob`        | User Logged in | Adds job to User profile                      |
 | DELETE | `/users/removeJob/:id` | User Logged in | Delete a Job Post                             |
 | PUT    | `/users/updateJob/:id` | User logged in | Updates a job for the logged in user.         |
 | GET    | `/users/columns`       | User logged in | Returns column titles for the logged in user. |
+
+#### Tags Routes
+
+| Method | Endpoint                    | Access Control | Description                                  |
+| ------ | --------------------------- | -------------- | -------------------------------------------- |
+| GET    | `/users/tags`               | User logged in | Returns all job tags for that user.          |
+| POST   | `/users/tags/addTag/:id`    | User Logged in | Adds tag to job on User profile              |
+| DELETE | `/users/tags/removeTag/:id` | User Logged in | Delete a tag from job post                   |
+| PUT    | `/users/tags/updateTag/:id` | User logged in | Updates a tag for the logged in user.        |
+
 
 # Data Model
 
