@@ -4,7 +4,7 @@ function getTasks(jobId) {
     return db("tasks")
         .join("jobPosts", "tasks.job_id", "jobPosts.id")
         .where({job_id: jobId})
-        .select("jobPosts.jobTitle", "jobPosts.companyTitle", "tasks.taskName", "tasks.completed");
+        .select("jobPosts.jobTitle", "jobPosts.companyTitle", "tasks.taskName", "tasks.completed", "tasks.date");
 }
 
 function getTaskById(jobId, taskId) {
@@ -12,7 +12,7 @@ function getTaskById(jobId, taskId) {
         .join("jobPosts", "tasks.job_id", "jobPosts.id")
         .where({job_id: jobId})
         .where("tasks.id", taskId)
-        .select("jobPosts.jobTitle", "jobPosts.companyTitle", "tasks.taskName", "tasks.completed");
+        .select("jobPosts.jobTitle", "jobPosts.companyTitle", "tasks.taskName", "tasks.completed", "tasks.date");
 }
 
 async function addTask(jobId, newTask) {
