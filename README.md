@@ -109,15 +109,45 @@ To get the server running locally:
 
 #### Job posts
 
-`findJob()` -> Retuns all Jobs
-
-`findJobById(id)` -> Returns a Job post by Job id
+`findJob()` -> Returns all Jobs
 
 `addJob(job, id)` -> Add a Job
+
+`findJobById(id)` -> Returns a Job post by Job id
 
 `findJobByUser(users_id)` -> Finds all users Jobs.
 
 `removeJob(id)` -> Deletes a Job
+
+`updateJob(id, job_update)` -> Updates a job
+
+`findColumn()` -> Finds column id
+
+#### Tags
+
+`findTags()` -> Returns all job tags
+
+`findTagsByUser(userId)` -> Returns all job tags for specific user
+
+`findTagById(id)` -> Returns one job tag
+
+`addTag(newTag,id)` -> Adds a new tag to job post
+
+`removeTag(id)` -> Removes a tag from a job post
+
+`updateTag(id, tag_update)` -> Updates a tag
+
+#### Tasks
+
+`getTasks()` -> Returns all tasks for job post
+
+`getTaskById(jobId, taskId)` -> Returns one task for specific job
+
+`addTask(jobId, newTask)` -> Adds a new task to job post
+
+`updateTask(jobId, taskId, updates)` -> Updates a task
+
+`deleteTask(taskId)` -> Deletes a task from a job
 
 ## 3️⃣ Environment Variables
 
