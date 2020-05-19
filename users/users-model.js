@@ -11,7 +11,7 @@ function findBy(filter) {
 async function add(user) {
   return db("users").insert(user);
 }
-
+// Used in middleware
 async function findByEmail(email) {
   const user = await db("users")
     .where({ email })
