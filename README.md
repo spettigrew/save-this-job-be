@@ -19,12 +19,8 @@ To get the server running locally:
 
 ### Backend framework Sqlite3 (Development) PostgreSQL(Production)
 
-🚫 Why did you choose this framework?
-
-- Point One
-- Point Two
-- Point Three
-- Point Four
+- Point One - This framework has a high level of scalability as the project grows.
+- Point Two - This is an accessible framework for developers early in their career to use.
 
 ## 2️⃣ Endpoints
 
@@ -82,8 +78,46 @@ To get the server running locally:
 {
   id: UUID
   jobTitle: STRING
-  url: STRING
-  users_id: STRING
+  urlText: TEXT
+  logo: STRING
+  companyTitle: STRING
+  companyUrl: STRING
+  users_id: INTEGER
+  column_id: STRING
+  index: INTEGER
+  applicationDeadline: DATE
+  rating: INTEGER
+  description: TEXT
+  location: STRING
+  notes: TEXT
+  latitude: FLOAT
+  longitude: FLOAT
+}
+```
+
+#### Job tags
+
+---
+
+```
+{
+  id: UUID
+  tagName: STRING
+  jobPosts_id: INTEGER
+}
+```
+
+#### Job tasks
+
+---
+
+```
+{
+  id: UUID
+  taskName: STRING
+  date: DATE
+  job_id: INTEGER
+  completed: BOOLEAN
 }
 ```
 
@@ -147,13 +181,13 @@ In order for the app to function correctly, the user must set up their own envir
 
 create a .env file that includes the following:
 
-🚫 These are just examples, replace them with the specifics for your app
+- NODE_ENV = set to "development" until ready for "production"
 
-_ STAGING_DB - optional development db for using functionality not available in SQLite
-_ NODE\*ENV - set to "development" until ready for "production"
+- OKTA_AUTH_TOKEN = okta profile web token
 
-- JWT*SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-_=+)') for i in range(50)])
-  _ SENDGRID_API_KEY - this is generated in your Sendgrid account \* stripe_secret - this is generated in the Stripe dashboard
+- OKTA_ORG = okta resource server issuer url
+
+- OKTA_CLIENT_ID = xxxx
 
 ## Contributing
 
