@@ -38,19 +38,15 @@ To get the server running locally:
 
 #### Base URL https://staging-save-this-job.herokuapp.com/
 
-#### User Routes
-
-| Method | Endpoint     | Access Control | Description                          |
-| ------ | ------------ | -------------- | ------------------------------------ |
-| GET    | `/users/:id` | Specific User  | Returns info for the logged in user. |
-
 #### Job posts Routes
 
-| Method | Endpoint              | Access Control | Description                          |
-| ------ | --------------------- | -------------- | ------------------------------------ |
-| GET    | `/users/jobs`         | User logged in | Returns All job posts for that user. |
-| POST   | `/users/addJob`       | User Logged in | Adds job to User profile             |
-| DELETE | `/users/removeJob:id` | User Logged in | Delete a Job Post                    |
+| Method | Endpoint               | Access Control | Description                                   |
+| ------ | ---------------------- | -------------- | --------------------------------------------- |
+| GET    | `/users/jobs`          | User logged in | Returns All job posts for that user.          |
+| POST   | `/users/addJob`        | User Logged in | Adds job to User profile                      |
+| DELETE | `/users/removeJob/:id` | User Logged in | Delete a Job Post                             |
+| PUT    | `/users/updateJob/:id` | User logged in | Updates a job for the logged in user.         |
+| GET    | `/users/columns`       | User logged in | Returns column titles for the logged in user. |
 
 # Data Model
 
