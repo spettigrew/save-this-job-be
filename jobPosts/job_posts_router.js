@@ -3,11 +3,9 @@ const router = express.Router();
 const jobMod = require("../jobPosts/job_posts_model.js");
 const tagsRouter = require("../tags/tags_router");
 const tasksRouter = require("../tasks/tasks_router");
-// const interviewsRouter = require("../interviews/interviews_router");
 
 router.use("/tags", tagsRouter);
 router.use("/tasks", tasksRouter);
-// router.use("/interviews", interviewsRouter);
 
 // Grab user jobs
 router.get(

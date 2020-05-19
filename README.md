@@ -1,9 +1,3 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by. Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric. Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
 # API Documentation
 
 #### Code Climate
@@ -18,8 +12,6 @@
 
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
-
 - Clone this repo
 - **npm install** to install all required dependencies
 - **npm server** to start the local server
@@ -27,30 +19,41 @@ To get the server running locally:
 
 ### Backend framework Sqlite3 (Development) PostgreSQL(Production)
 
-🚫 Why did you choose this framework?
-
-- Point One
-- Point Two
-- Point Three
-- Point Four
+- Point One - This framework has a high level of scalability as the project grows.
+- Point Two - This is an accessible framework for developers early in their career to use.
 
 ## 2️⃣ Endpoints
 
 #### Base URL https://staging-save-this-job.herokuapp.com/
 
-#### User Routes
-
-| Method | Endpoint     | Access Control | Description                          |
-| ------ | ------------ | -------------- | ------------------------------------ |
-| GET    | `/users/:id` | Specific User  | Returns info for the logged in user. |
-
 #### Job posts Routes
 
-| Method | Endpoint              | Access Control | Description                          |
-| ------ | --------------------- | -------------- | ------------------------------------ |
-| GET    | `/users/jobs`         | User logged in | Returns All job posts for that user. |
-| POST   | `/users/addJob`       | User Logged in | Adds job to User profile             |
-| DELETE | `/users/removeJob:id` | User Logged in | Delete a Job Post                    |
+| Method | Endpoint               | Access Control | Description                                   |
+| ------ | ---------------------- | -------------- | --------------------------------------------- |
+| GET    | `/users/jobs`          | User logged in | Returns all job posts for that user.          |
+| POST   | `/users/addJob`        | User Logged in | Adds job to User profile                      |
+| DELETE | `/users/removeJob/:id` | User Logged in | Delete a Job Post                             |
+| PUT    | `/users/updateJob/:id` | User logged in | Updates a job for the logged in user.         |
+| GET    | `/users/columns`       | User logged in | Returns column titles for the logged in user. |
+
+#### Tags Routes
+
+| Method | Endpoint                    | Access Control | Description                                  |
+| ------ | --------------------------- | -------------- | -------------------------------------------- |
+| GET    | `/users/tags`               | User logged in | Returns all job tags for that user.          |
+| POST   | `/users/tags/addTag/:id`    | User Logged in | Adds tag to job on User profile              |
+| DELETE | `/users/tags/removeTag/:id` | User Logged in | Delete a tag from job post                   |
+| PUT    | `/users/tags/updateTag/:id` | User logged in | Updates a tag for the logged in user.        |
+
+#### Tasks Routes
+
+| Method | Endpoint                      | Access Control | Description                                   |
+| ------ | ----------------------------- | -------------- | --------------------------------------------- |
+| GET    | `/users/tasks/:jobId`         | User logged in | Returns all tasks for the job of the user.    |
+| GET    | `/users/tasks/:jobId/:taskId` | User logged in | Returns one task for the job of the user.     |
+| POST   | `/users/tasks/:jobId/addTask` | User Logged in | Adds task to job on User profile              |
+| PUT    | `/users/tasks/:jobId/:taskId` | User logged in | Updates a task for the logged in user.        |
+| DELETE | `/users/tasks/:taskId`        | User Logged in | Delete a task from job post                   |
 
 # Data Model
 
@@ -75,8 +78,46 @@ To get the server running locally:
 {
   id: UUID
   jobTitle: STRING
-  url: STRING
-  users_id: STRING
+  urlText: TEXT
+  logo: STRING
+  companyTitle: STRING
+  companyUrl: STRING
+  users_id: INTEGER
+  column_id: STRING
+  index: INTEGER
+  applicationDeadline: DATE
+  rating: INTEGER
+  description: TEXT
+  location: STRING
+  notes: TEXT
+  latitude: FLOAT
+  longitude: FLOAT
+}
+```
+
+#### Job tags
+
+---
+
+```
+{
+  id: UUID
+  tagName: STRING
+  jobPosts_id: INTEGER
+}
+```
+
+#### Job tasks
+
+---
+
+```
+{
+  id: UUID
+  taskName: STRING
+  date: DATE
+  job_id: INTEGER
+  completed: BOOLEAN
 }
 ```
 
@@ -94,15 +135,45 @@ To get the server running locally:
 
 #### Job posts
 
-`findJob()` -> Retuns all Jobs
-
-`findJobById(id)` -> Returns a Job post by Job id
+`findJob()` -> Returns all Jobs
 
 `addJob(job, id)` -> Add a Job
+
+`findJobById(id)` -> Returns a Job post by Job id
 
 `findJobByUser(users_id)` -> Finds all users Jobs.
 
 `removeJob(id)` -> Deletes a Job
+
+`updateJob(id, job_update)` -> Updates a job
+
+`findColumn()` -> Finds column id
+
+#### Tags
+
+`findTags()` -> Returns all job tags
+
+`findTagsByUser(userId)` -> Returns all job tags for specific user
+
+`findTagById(id)` -> Returns one job tag
+
+`addTag(newTag,id)` -> Adds a new tag to job post
+
+`removeTag(id)` -> Removes a tag from a job post
+
+`updateTag(id, tag_update)` -> Updates a tag
+
+#### Tasks
+
+`getTasks()` -> Returns all tasks for job post
+
+`getTaskById(jobId, taskId)` -> Returns one task for specific job
+
+`addTask(jobId, newTask)` -> Adds a new task to job post
+
+`updateTask(jobId, taskId, updates)` -> Updates a task
+
+`deleteTask(taskId)` -> Deletes a task from a job
 
 ## 3️⃣ Environment Variables
 
@@ -110,13 +181,13 @@ In order for the app to function correctly, the user must set up their own envir
 
 create a .env file that includes the following:
 
-🚫 These are just examples, replace them with the specifics for your app
+- NODE_ENV = set to "development" until ready for "production"
 
-_ STAGING_DB - optional development db for using functionality not available in SQLite
-_ NODE\*ENV - set to "development" until ready for "production"
+- OKTA_AUTH_TOKEN = okta profile web token
 
-- JWT*SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-_=+)') for i in range(50)])
-  _ SENDGRID_API_KEY - this is generated in your Sendgrid account \* stripe_secret - this is generated in the Stripe dashboard
+- OKTA_ORG = okta resource server issuer url
+
+- OKTA_CLIENT_ID = xxxx
 
 ## Contributing
 
@@ -157,5 +228,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Frontend Documentation](https://github.com/Lambda-School-Labs/job-book-fe/blob/master/README.md) for details on the fronend of our project.
