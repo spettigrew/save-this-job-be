@@ -42,6 +42,7 @@ router.post(
       }
       tasksModel.addTask(jobId, body)
         .then((addedTask) => {
+          console.log(adddedTask)
           if (addedTask) {
             res.status(201).json({
               message: "New task created"
