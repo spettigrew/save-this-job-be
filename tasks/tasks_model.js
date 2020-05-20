@@ -16,8 +16,14 @@ function getTaskById(jobId, taskId) {
 }
 
 async function addTask(jobId, newTask) {
-    const [added] = await db("tasks").insert( newTask );
-    return getTaskById(jobId, added);
+    // const [added] = await db("tasks").insert( newTask );
+    // return getTaskById(jobId, added);
+    return db("tasks").insert( newTask )
+    .then((id) => {
+      console.log(id)
+      return getTaskById(jobId, id[0])
+    })
+    .catch(err => console.log(err))
 }
 
 
