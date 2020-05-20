@@ -13,14 +13,14 @@ describe("tasks router", () => {
         it("should get all tasks, return 200", async () => {
             const res = await supertest(server).get('/users/tasks/1');
 
-            expect(res.text).toBe("[{\"jobTitle\":\"Junior Dev\",\"companyTitle\":\"Amazon\",\"taskName\":\"fifth day\",\"completed\":0,\"date\":null},{\"jobTitle\":\"Junior Dev\",\"companyTitle\":\"Amazon\",\"taskName\":\"sleep\",\"completed\":0,\"date\":null}]");
+            expect(res.text).toBe("[{\"jobTitle\":\"Junior Dev\",\"companyTitle\":\"Amazon\",\"id\":1,\"taskName\":\"fifth day\",\"completed\":0,\"date\":null},{\"jobTitle\":\"Junior Dev\",\"companyTitle\":\"Amazon\",\"id\":2,\"taskName\":\"sleep\",\"completed\":0,\"date\":null}]");
             expect(res.status).toBe(200)
             expect(res.type).toBe("application/json")
         })
         it("should get one task, return 200", async() => {
             const res = await supertest(server).get('/users/tasks/1/1');
 
-            expect(res.text).toBe("[{\"jobTitle\":\"Junior Dev\",\"companyTitle\":\"Amazon\",\"taskName\":\"fifth day\",\"completed\":0,\"date\":null}]");
+            expect(res.text).toBe("[{\"jobTitle\":\"Junior Dev\",\"companyTitle\":\"Amazon\",\"id\":1,\"taskName\":\"fifth day\",\"completed\":0,\"date\":null}]");
             expect(res.status).toBe(200);
             expect(res.type).toBe("application/json");
         })
