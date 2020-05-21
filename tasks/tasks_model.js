@@ -4,16 +4,16 @@ function getTasks(jobId) {
     return db("tasks")
         // .join("jobPosts", "tasks.job_id", "jobPosts.id")
         .where({job_id: jobId})
-        .returning('*')
+        .select()
         // .select("jobPosts.jobTitle", "jobPosts.companyTitle", "tasks.id", "tasks.taskName", "tasks.completed", "tasks.date");
 }
 
-function getTaskById(jobId, taskId) {
+function getTaskById(taskId) {
     return db("tasks")
         // .join("jobPosts", "tasks.job_id", "jobPosts.id")
         // .where({job_id: jobId})
         .where("tasks.id", taskId)
-        .returning('*')
+        .select()
         // .select( "tasks.id", "tasks.taskName", "tasks.completed", "tasks.date");
 }
 
