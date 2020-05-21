@@ -33,26 +33,24 @@ router.get(
 
 router.post(
   "/:jobId/addTask",
-  (req, res, next) => {
+  async (req, res, next) => {
     try {
       const jobId = req.params.jobId
       const body = {
         job_id: jobId,
         ...req.body
       }
-      tasksModel.addTask(jobId, body)
-        .then((addedTask) => {
-          console.log(adddedTask)
-          if (addedTask) {
-            res.status(201).json({
-              message: "New task created"
-            })
-          } else {
-            res.status(404).json({
-              message: "Error - no task name"
-            })
-          }
+      const addedTask = await tasksModel.addTask(jobId, body)
+      
+      if (addedTask) {
+        res.status(201).json({
+          message: "New task created"
         })
+      } else {
+        res.status(404).json({
+          message: "Error - no task name"
+        })
+      }
 
     } catch (err) {
       next(err);
