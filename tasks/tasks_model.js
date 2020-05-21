@@ -8,7 +8,7 @@ function getTasks(jobId) {
         // .select("jobPosts.jobTitle", "jobPosts.companyTitle", "tasks.id", "tasks.taskName", "tasks.completed", "tasks.date");
 }
 
-function getTaskById(jobId, taskId) {
+function getTaskById(taskId) {
     return db("tasks")
         // .join("jobPosts", "tasks.job_id", "jobPosts.id")
         // .where({job_id: jobId})
